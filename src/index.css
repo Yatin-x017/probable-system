@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Base surface colors */
+    --background: 0 0% 100%;
+    --foreground: 220 15% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
+
+    /* Primary — neutral dark for text/UI */
+    --primary: 220 15% 15%;
+    --primary-foreground: 0 0% 98%;
+
+    /* Secondary — light grey surface */
+    --secondary: 210 20% 98%;
+    --secondary-foreground: 220 15% 15%;
+
+    /* Muted — subtle grey */
+    --muted: 210 20% 96%;
+    --muted-foreground: 220 10% 45%;
+
+    /* Accent — sky blue as default accent */
+    --accent: 214 72% 59%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Destructive — coral red */
+    --destructive: 0 100% 71%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 90%;
+    --input: 220 13% 90%;
+    --ring: 214 72% 59%;
+    --radius: 0.625rem;
+
+    /* Sidebar colors */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* Utility classes for the 4 playful accent colors */
+@layer utilities {
+  .bg-sky { background-color: #4A90E2; }
+  .bg-coral { background-color: #FF6B6B; }
+  .bg-sunny { background-color: #FFD93D; }
+  .bg-fresh { background-color: #6BCB77; }
+  .text-sky { color: #4A90E2; }
+  .text-coral { color: #FF6B6B; }
+  .text-sunny { color: #B89A00; }
+  .text-fresh { color: #2D7A38; }
+  .border-sky { border-color: #4A90E2; }
+  .border-coral { border-color: #FF6B6B; }
+  .border-sunny { border-color: #FFD93D; }
+  .border-fresh { border-color: #6BCB77; }
+
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fade-in 0.4s ease-out forwards;
+  }
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out forwards;
+  }
+
+  /* Reduced motion support */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in,
+    .animate-fade-in-up {
+      animation: none;
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Frosted-glass text for the hero heading.
+     Note: this used to be background-clip: text + backdrop-filter, sampling
+     whatever sits behind the glyphs (the WebGL hero spheres) and blurring
+     it. That combination is unreliable over a live WebGL canvas — Chrome
+     doesn't always composite the backdrop sample cleanly, so instead of a
+     soft blur through the letter shapes it rendered as blocky, jittery
+     rectangles that made the heading hard to read. This version keeps the
+     effect scoped to the glyphs only (still via background-clip: text) but
+     fakes the "glass" with a fixed gradient + soft shadow instead of a live
+     blur sample, so it reads as frosted glass and renders identically no
+     matter what's moving underneath it. */
+  .frosted-text {
+    color: rgb(255 255 255 / 0.96);
+    background-image: linear-gradient(
+      180deg,
+      rgb(255 255 255 / 1) 0%,
+      rgb(255 255 255 / 0.88) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-stroke: 1px rgb(255 255 255 / 0.4);
+    filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.18)) drop-shadow(0 10px 28px rgb(0 0 0 / 0.16));
+  }
+  .frosted-text--muted {
+    color: rgb(255 255 255 / 0.7);
+    background-image: linear-gradient(
+      180deg,
+      rgb(255 255 255 / 0.78) 0%,
+      rgb(255 255 255 / 0.55) 100%
+    );
+    -webkit-text-stroke: 1px rgb(255 255 255 / 0.22);
+  }
+}
