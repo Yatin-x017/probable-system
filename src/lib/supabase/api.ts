@@ -19,6 +19,9 @@ export function friendlySubmissionError(err: unknown): string {
   if (err && typeof err === 'object' && 'code' in err && (err as { code?: string }).code === 'PT429') {
     return "You've submitted a few of these already — please wait a few minutes before trying again."
   }
+  if (err && typeof err === 'object' && 'code' in err && (err as { code?: string }).code === '23505') {
+    return 'That time slot was just taken. Please pick another one.'
+  }
   return 'Something went wrong. Please try again.'
 }
 
@@ -127,8 +130,10 @@ export async function createBooking(
   startsAt: string,
   endsAt: string,
   purpose?: string
-): Promise<Booking> {
-  const { data, error } = await supabase
+): Promise<void> {
+  // No .select() here: anon visitors can INSERT but not SELECT (RLS), and
+  // returning the row back would fail with 42501 for logged-out users.
+  const { error } = await supabase
     .from('bookings')
     .insert([{
       name,
@@ -138,11 +143,8 @@ export async function createBooking(
       ends_at: endsAt,
       status: 'confirmed',
     }] as any)
-    .select()
-    .single()
 
   if (error) throw error
-  return data as Booking
 }
 
 // ==================== ADMIN API (auth required) ====================
