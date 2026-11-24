@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
 import GithubProjects from '@/components/GithubProjects'
@@ -74,6 +74,7 @@ export default function Home() {
   const [hero, setHero] = useState<HeroContent>(DEFAULT_HERO)
   const [about, setAbout] = useState<AboutTeaserContent>(DEFAULT_ABOUT_TEASER)
   const [cta, setCta] = useState<CtaContent>(DEFAULT_CTA)
+  const reducedMotion = useReducedMotion()
 
   useEffect(() => {
     getFeaturedProjects().then(setProjects).catch(console.error).finally(() => setLoading(false))
