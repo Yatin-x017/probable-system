@@ -2,12 +2,12 @@
 'use client'
 
 /**
- * Brusha: an illustrated studio hero. A coral line draws the wordmark and flies it into the navbar, a paper-textured
- * meadow scene sways on its own, the sun's eyes follow the cursor and the girl's sweater changes colour on hover.
+ * Yats uses the supplied illustrated studio hero: a coral line draws the wordmark and moves it into the navbar, a
+ * paper-textured meadow sways on its own, the sun's eyes follow the cursor and the figure changes sweater colour on hover.
  *
  * Content (brand, logo, navigation, copy, the two girl images) is passed as props; the demo supplies the original studio.
  *
- * Dependencies: motion (motion/react), lucide-react
+ * Dependencies: framer-motion (ported from motion/react), lucide-react
  * Fonts: Archivo (800, variable width) for the headline and Figtree (400-700); load them in the host page, the component
  * falls back to system sans until they are available.
  *
@@ -85,7 +85,7 @@ const NAV_INTRO = {
   transform: { start: 1.2, duration: 1.5 },
   letterDuration: 0.5,
 
-  // How far along the erase each letter starts forming, measured along the line so the B waits for its loop
+  // How far along the erase each letter starts forming as the line travels left to right
   letterAt: [0.18, 0.43, 0.68, 0.88],
 
   // Centre → navbar
@@ -96,7 +96,7 @@ const NAV_INTRO = {
   // The plain logo image takes over and the intro layer is removed
   done: 4.6,
 
-  // The gaps between letters in the logo file, in px of its 600 width
+  // Letter boundaries in the Yats wordmark, measured against its 150 px width
   letterEdges: [0, 60, 80, 98, 150]
 }
 
