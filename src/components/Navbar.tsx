@@ -1,193 +1,90 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
-import { getSiteContent } from '@/lib/supabase/content'
-import { DEFAULT_SITE_SETTINGS } from '@/lib/content/defaults'
-import { Button } from '@/components/ui/button'
-import { springs } from '@/lib/motion'
-import { cn } from '@/lib/utils'
+import { ArrowUpRight, Menu, X } from 'lucide-react'
+import YatsLogo from '@/components/YatsLogo'
 
 const navLinks = [
   { label: 'Work', href: '/work' },
+  { label: 'Services', href: '/pricing' },
   { label: 'About', href: '/about' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Contact', href: '/contact' },
 ]
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [siteName, setSiteName] = useState(DEFAULT_SITE_SETTINGS.site_name)
   const location = useLocation()
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  useEffect(() => setMobileOpen(false), [location.pathname])
 
-  useEffect(() => {
-    getSiteContent('site_settings')
-      .then((s) => setSiteName(s.site_name))
-      .catch(console.error)
-  }, [])
-
-  useEffect(() => {
-    setMobileOpen(false)
-  }, [location.pathname])
-
-  const isActive = (href: string) => {
-    if (href === '/work') return location.pathname.startsWith('/work')
-    if (href === '/blog') return location.pathname.startsWith('/blog')
-    return location.pathname === href
-  }
+  const isActive = (href: string) => href === '/work'
+    ? location.pathname.startsWith('/work')
+    : location.pathname === href
 
   return (
-    <>
-      {/* Floating glass navbar. Shrinks + gains blur/border once you scroll
-          past the hero, so it reads as a real surface instead of a static bar. */}
-      <motion.nav
-        initial={false}
-        animate={{
-          paddingTop: scrolled ? 10 : 20,
-          paddingBottom: scrolled ? 10 : 20,
-        }}
-        transition={springs.smooth}
-        className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-6"
-      >
-        <motion.div
-          initial={false}
-          animate={{
-            backgroundColor: scrolled ? 'rgba(255,255,255,0.82)' : 'rgba(255,255,255,0)',
-            borderColor: scrolled ? 'rgba(0,0,0,0.06)' : 'rgba(0,0,0,0)',
-            boxShadow: scrolled
-              ? '0 8px 30px -12px rgb(0 0 0 / 0.12)'
-              : '0 0px 0px 0 rgb(0 0 0 / 0)',
-          }}
-          transition={springs.smooth}
-          // backdrop-blur is only mounted once there's an actual white surface
-          // to blur (i.e. once scrolled). Leaving it on permanently — even at
-          // 0% background opacity — was sampling the WebGL hero underneath
-          // and rendering as a hazy, blocky smear instead of a clean pane of
-          // glass, which killed the premium feel of the header.
-          className={cn(
-            'mx-auto max-w-6xl rounded-2xl border',
-            scrolled && 'backdrop-blur-xl'
-          )}
-        >
-          <div className="flex items-center justify-between px-4 sm:px-6 h-12">
-            {/* Logo */}
+    <header className="fixed inset-x-0 top-0 z-50 bg-[#f8f6f1] text-[#121212]">
+      <nav aria-label="Main navigation" className="mx-auto flex h-[76px] max-w-[1440px] items-center justify-between border-b border-[#121212]/15 px-5 sm:px-8 lg:px-12">
+        <Link to="/" aria-label="Yats home" className="inline-flex items-center rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2f6b44]">
+          <YatsLogo compact animated />
+          <span className="ml-2.5 font-display text-[1.42rem] font-extrabold tracking-[-0.075em]">yats<span className="text-[#d24b3e]">.</span></span>
+        </Link>
+
+        <div className="hidden items-center gap-8 md:flex">
+          {navLinks.map((link) => (
             <Link
-              to="/"
-              className="text-base font-semibold tracking-tight text-gray-900 transition-opacity hover:opacity-70"
+              key={link.href}
+              to={link.href}
+              className={`relative py-2 text-[13px] font-semibold transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-[2px] after:origin-left after:bg-[#d24b3e] after:transition-transform after:duration-300 ${isActive(link.href) ? 'text-[#121212] after:scale-x-100' : 'text-[#5d6673] after:scale-x-0 hover:text-[#121212] hover:after:scale-x-100'}`}
             >
-              <img src="/yats-logo.svg" alt={siteName} className="h-9 w-auto" />
+              {link.label}
             </Link>
+          ))}
+          <Link to="/contact" className="group inline-flex h-10 items-center gap-2 bg-[#121212] px-4 text-[13px] font-semibold text-[#f8f6f1] transition-colors hover:bg-[#d24b3e] hover:text-[#121212]">
+            Start a project
+            <ArrowUpRight className="h-4 w-4 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </Link>
+        </div>
 
-            {/* Desktop Nav — active link gets a sliding pill via layoutId */}
-            <div className="hidden md:flex items-center gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  to={link.href}
-                  data-tour={`nav-${link.label.toLowerCase()}`}
-                  className={`relative px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${
-                    isActive(link.href)
-                      ? 'text-gray-900'
-                      : 'text-gray-500 hover:text-gray-900'
-                  }`}
-                >
-                  {isActive(link.href) && (
-                    <motion.span
-                      layoutId="nav-active-pill"
-                      className="absolute inset-0 rounded-full bg-gray-100"
-                      transition={springs.snappy}
-                    />
-                  )}
-                  <span className="relative z-10">{link.label}</span>
-                </Link>
-              ))}
-              <Button asChild size="sm" className="ml-2 rounded-full">
-                <Link to="/book" data-tour="nav-book">Book a Call</Link>
-              </Button>
-            </div>
+        <button
+          type="button"
+          onClick={() => setMobileOpen((open) => !open)}
+          className="inline-flex h-11 w-11 items-center justify-center border border-[#121212]/20 text-[#121212] transition-colors hover:bg-[#fec430] md:hidden"
+          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-navigation"
+        >
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span key={mobileOpen ? 'close' : 'open'} initial={{ opacity: 0, rotate: -25 }} animate={{ opacity: 1, rotate: 0 }} exit={{ opacity: 0, rotate: 25 }} transition={{ duration: 0.15 }}>
+              {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </motion.span>
+          </AnimatePresence>
+        </button>
+      </nav>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileOpen((v) => !v)}
-              className="md:hidden p-2 -mr-2 rounded-full text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
-              aria-label="Toggle menu"
-              aria-expanded={mobileOpen}
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.span
-                  key={mobileOpen ? 'close' : 'open'}
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={springs.snappy}
-                  className="flex"
-                >
-                  {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-                </motion.span>
-              </AnimatePresence>
-            </button>
-          </div>
-        </motion.div>
-      </motion.nav>
-
-      {/* Mobile Menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="fixed inset-0 z-40 md:hidden"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            id="mobile-navigation"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute inset-x-0 top-[76px] border-b border-[#121212]/15 bg-[#f8f6f1] px-5 pb-6 pt-3 shadow-[0_18px_36px_rgba(24,35,56,0.12)] md:hidden"
           >
-            <motion.div
-              className="absolute inset-0 bg-black/20 backdrop-blur-sm"
-              onClick={() => setMobileOpen(false)}
-            />
-            <motion.div
-              initial={{ opacity: 0, y: -12, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -12, scale: 0.98 }}
-              transition={springs.smooth}
-              className="absolute top-20 left-3 right-3 rounded-2xl bg-white/95 backdrop-blur-xl shadow-layer-lg border border-black/5 overflow-hidden"
-            >
-              <div className="px-3 py-3 space-y-1">
-                {navLinks.map((link, i) => (
-                  <motion.div
-                    key={link.href}
-                    initial={{ opacity: 0, x: -8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ ...springs.smooth, delay: i * 0.04 }}
-                  >
-                    <Link
-                      to={link.href}
-                      className={`block px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
-                        isActive(link.href)
-                          ? 'text-gray-900 bg-gray-100'
-                          : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                      }`}
-                    >
-                      {link.label}
-                    </Link>
-                  </motion.div>
-                ))}
-                <Button asChild className="w-full mt-2 rounded-xl">
-                  <Link to="/book">Book a Call</Link>
-                </Button>
-              </div>
-            </motion.div>
+            <div className="mx-auto max-w-[1440px]">
+              {navLinks.map((link, index) => (
+                <motion.div key={link.href} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.035 }}>
+                  <Link to={link.href} className="flex min-h-14 items-center justify-between border-b border-[#121212]/10 font-display text-xl font-bold tracking-[-0.04em]">
+                    {link.label}<ArrowUpRight className="h-4 w-4 text-[#d24b3e]" />
+                  </Link>
+                </motion.div>
+              ))}
+              <Link to="/contact" className="mt-5 flex h-12 items-center justify-center gap-2 bg-[#121212] text-sm font-semibold text-[#f8f6f1]">
+                Start a project<ArrowUpRight className="h-4 w-4" />
+              </Link>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </header>
   )
 }

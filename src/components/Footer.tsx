@@ -1,70 +1,25 @@
 import { useEffect, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { Github, Linkedin, Mail } from 'lucide-react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import { ArrowUpRight, Github, Linkedin, Mail } from 'lucide-react'
+import { motion } from 'framer-motion'
 import { getSiteContent } from '@/lib/supabase/content'
 import { DEFAULT_SITE_SETTINGS } from '@/lib/content/defaults'
-import { pressable, springs, useStagger } from '@/lib/motion'
-import { useLenis } from '@/components/ScrollProvider'
 import type { SiteSettingsContent } from '@/lib/content/defaults'
-
-// How far the page needs to scroll before the footer is allowed to reveal.
-// Small enough to feel responsive, large enough that landing on a short page
-// (like Book) doesn't dump the footer straight into view unscrolled.
-const REVEAL_THRESHOLD = 48
+import YatsLogo from '@/components/YatsLogo'
 
 const navLinks = [
   { label: 'Work', href: '/work' },
+  { label: 'Services', href: '/pricing' },
   { label: 'About', href: '/about' },
-  { label: 'Blog', href: '/blog' },
   { label: 'Contact', href: '/contact' },
-  { label: 'Book a Call', href: '/book' },
-]
-
-const legalLinks = [
-  { label: 'Terms of Use', href: '/terms' },
-  { label: 'Privacy Policy', href: '/privacy' },
-  { label: 'Terms & Conditions', href: '/terms-of-service' },
-  { label: 'Data Policy', href: '/data-policy' },
-  { label: 'Cookie Preferences', href: '/cookies' },
 ]
 
 export default function Footer() {
   const [settings, setSettings] = useState<SiteSettingsContent>(DEFAULT_SITE_SETTINGS)
-  const stagger = useStagger()
-  const lenis = useLenis()
-  const location = useLocation()
-  const prefersReducedMotion = useReducedMotion()
-  const [revealed, setRevealed] = useState(false)
 
   useEffect(() => {
     getSiteContent('site_settings').then(setSettings).catch(console.error)
   }, [])
-
-  // Footer starts hidden on every route and only reveals once the person has
-  // scrolled a bit — so it never just sits fully in view on a short page
-  // (like Book) before they've done anything.
-  useEffect(() => {
-    setRevealed(false)
-
-    const checkScroll = (scroll: number) => {
-      if (scroll > REVEAL_THRESHOLD) setRevealed(true)
-    }
-
-    if (lenis) {
-      const handler = ({ scroll }: { scroll: number }) => checkScroll(scroll)
-      lenis.on('scroll', handler)
-      checkScroll(lenis.scroll ?? window.scrollY)
-      return () => {
-        lenis.off('scroll', handler)
-      }
-    }
-
-    const handleWindowScroll = () => checkScroll(window.scrollY)
-    window.addEventListener('scroll', handleWindowScroll, { passive: true })
-    handleWindowScroll()
-    return () => window.removeEventListener('scroll', handleWindowScroll)
-  }, [lenis, location.pathname])
 
   const socialLinks = [
     { icon: Github, href: settings.social_github, label: 'GitHub' },
@@ -73,93 +28,48 @@ export default function Footer() {
   ]
 
   return (
-    <motion.footer
-      initial={false}
-      animate={revealed ? { opacity: 1, y: 0 } : { opacity: 0, y: prefersReducedMotion ? 0 : 24 }}
-      transition={prefersReducedMotion ? { duration: 0.15 } : springs.smooth}
-      style={{ pointerEvents: revealed ? 'auto' : 'none' }}
-      className="border-t border-gray-100 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <motion.div
-          variants={stagger.container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: '-80px' }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
-        >
-          {/* Brand */}
-          <motion.div variants={stagger.item}>
-            <Link to="/" className="text-lg font-semibold text-gray-900">
-              {settings.site_name}
+    <motion.footer initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.35 }} className="bg-[#121212] text-[#f8f6f1]">
+      <div className="mx-auto max-w-[1440px] px-5 pb-6 pt-12 sm:px-8 sm:pt-16 lg:px-12">
+        <div className="grid gap-12 border-b border-white/20 pb-12 md:grid-cols-[1.25fr_0.75fr_0.75fr]">
+          <div>
+            <Link to="/" aria-label="Yats home" className="inline-flex items-center gap-2.5">
+              <YatsLogo light compact />
+              <span className="font-display text-2xl font-extrabold tracking-[-0.075em]">yats<span className="text-[#d24b3e]">.</span></span>
             </Link>
-            <p className="mt-2 text-sm text-gray-500 max-w-xs">
-              {settings.footer_tagline}
-            </p>
-          </motion.div>
+            <p className="mt-5 max-w-sm text-[15px] leading-7 text-[#f8f6f1]/70">{settings.footer_tagline}</p>
+          </div>
 
-          {/* Links */}
-          <motion.div variants={stagger.item}>
-            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
-              Navigation
-            </h3>
-            <ul className="mt-3 space-y-2">
+          <div>
+            <h2 className="font-display text-xs font-bold uppercase tracking-[0.12em] text-[#fec430]">Explore</h2>
+            <ul className="mt-4 space-y-2.5">
               {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    to={link.href}
-                    className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
+                <li key={link.href}><Link to={link.href} className="text-sm text-[#f8f6f1]/78 transition-colors hover:text-white">{link.label}</Link></li>
               ))}
             </ul>
-          </motion.div>
+          </div>
 
-          {/* Social */}
-          <motion.div variants={stagger.item}>
-            <h3 className="text-sm font-semibold text-gray-900 uppercase tracking-wider">
-              Connect
-            </h3>
-            <div className="mt-3 flex gap-3">
-              {socialLinks.map((social) => (
-                <motion.a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  {...pressable}
-                  transition={springs.press}
-                  className="p-2 rounded-md bg-gray-50 text-gray-500 hover:bg-gray-100 hover:text-gray-900 transition-colors"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-4 h-4" />
-                </motion.a>
+          <div>
+            <h2 className="font-display text-xs font-bold uppercase tracking-[0.12em] text-[#fec430]">Say hello</h2>
+            <a href={`mailto:${settings.contact_email}`} className="mt-4 inline-flex items-center gap-2 text-sm text-white underline decoration-[#d24b3e] underline-offset-4 hover:text-[#fec430]">
+              {settings.contact_email}<ArrowUpRight className="h-4 w-4" />
+            </a>
+            <div className="mt-6 flex gap-2.5">
+              {socialLinks.map(({ icon: Icon, href, label }) => (
+                <a key={label} href={href} target={label === 'Email' ? undefined : '_blank'} rel={label === 'Email' ? undefined : 'noopener noreferrer'} aria-label={label} className="inline-flex h-10 w-10 items-center justify-center border border-white/25 text-white/80 transition-colors hover:border-[#fec430] hover:bg-[#fec430] hover:text-[#121212]">
+                  <Icon className="h-4 w-4" />
+                </a>
               ))}
             </div>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
-        <div className="mt-10 pt-6 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-gray-400">
-            &copy; {new Date().getFullYear()} {settings.site_name}. All rights reserved.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
-            {legalLinks.map((link) => (
-              <Link
-                key={link.href}
-                to={link.href}
-                className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                {link.label}
-              </Link>
-            ))}
-            <Link
-              to="/admin/login"
-              className="text-xs text-gray-300 hover:text-gray-500 transition-colors"
-            >
-              Admin
-            </Link>
+        <div className="flex flex-col gap-4 pt-5 text-xs text-[#f8f6f1]/50 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Yats · made by Yatin Sharma</p>
+          <div className="flex flex-wrap gap-x-4 gap-y-2">
+            <Link to="/terms" className="hover:text-white">Terms</Link>
+            <Link to="/privacy" className="hover:text-white">Privacy</Link>
+            <Link to="/cookies" className="hover:text-white">Cookies</Link>
+            <Link to="/admin/login" className="hover:text-white">Admin</Link>
           </div>
         </div>
       </div>
