@@ -62,6 +62,46 @@ function AdminBlogEditRoute() {
   return <AdminBlogEdit key={id} />
 }
 
+function PageLoadingFallback() {
+  return (
+    <div role="status" aria-label="Loading page" aria-busy="true" className="relative isolate min-h-[70svh] overflow-hidden bg-[#f8f6f1]">
+      <div aria-hidden="true" className="pointer-events-none absolute -right-16 top-20 h-72 w-72 rounded-full bg-[#fec430]/25 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-[#d24b3e]/10 blur-3xl" />
+      <div className="relative mx-auto max-w-[1440px] animate-pulse px-5 py-7 sm:px-8 lg:px-12">
+        <div className="flex items-center justify-between">
+          <div className="h-8 w-28 rounded-full bg-[#121212]/10" />
+          <div className="hidden items-center gap-6 md:flex">
+            <div className="h-3 w-12 rounded-full bg-[#121212]/10" />
+            <div className="h-3 w-16 rounded-full bg-[#121212]/10" />
+            <div className="h-3 w-12 rounded-full bg-[#121212]/10" />
+          </div>
+          <div className="h-10 w-32 rounded-full bg-[#d24b3e]/20" />
+        </div>
+        <div className="grid min-h-[58svh] items-center gap-10 py-12 md:grid-cols-[0.9fr_1.1fr]">
+          <div className="space-y-5">
+            <div className="h-12 w-[min(20rem,80%)] rounded-md bg-[#121212]/10 sm:h-16" />
+            <div className="h-12 w-[min(17rem,68%)] rounded-md bg-[#d24b3e]/20 sm:h-16" />
+            <div className="h-6 w-[min(14rem,58%)] rounded-md bg-[#121212]/10" />
+            <div className="space-y-2 pt-2">
+              <div className="h-3 w-full max-w-md rounded-full bg-[#121212]/10" />
+              <div className="h-3 w-4/5 max-w-sm rounded-full bg-[#121212]/10" />
+            </div>
+            <div className="flex gap-4 pt-3">
+              <div className="h-11 w-36 rounded-full bg-[#121212]/15" />
+              <div className="h-11 w-28 rounded-full bg-[#121212]/8" />
+            </div>
+          </div>
+          <div className="relative aspect-[1.45] overflow-hidden rounded-2xl bg-[#e7e0d3]/75 backdrop-blur-sm">
+            <div aria-hidden="true" className="absolute -right-10 top-6 h-56 w-56 rounded-full bg-[#fec430]/35 blur-3xl" />
+            <div aria-hidden="true" className="absolute bottom-0 left-8 h-40 w-40 rounded-full bg-[#d24b3e]/15 blur-3xl" />
+          </div>
+        </div>
+      </div>
+      <span className="sr-only">Loading page…</span>
+    </div>
+  )
+}
+
 // Navbar/Footer live here, outside the AnimatePresence key, so they never
 // remount on navigation — only the routed page content underneath transitions.
 function PublicLayout() {
@@ -106,9 +146,7 @@ function App() {
           <TourProvider>
             <Suspense
               fallback={
-                <div role="status" className="grid min-h-[50svh] place-items-center bg-[#f6f1e8] text-sm text-[#697282]">
-                  Loading…
-                </div>
+                <PageLoadingFallback />
               }
             >
             <Routes>
