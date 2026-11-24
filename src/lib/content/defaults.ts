@@ -83,11 +83,11 @@ export interface MarqueeContent {
 }
 
 export const DEFAULT_HERO: HeroContent = {
-  heading_top: 'Designer &',
-  heading_highlight: 'digital creator',
-  heading_bottom: 'for growing brands',
+  heading_top: 'Make your',
+  heading_highlight: 'brand',
+  heading_bottom: 'feel like you.',
   subheading:
-    'I create clear brand visuals, websites, and social content for small teams and independent businesses.',
+    'I help small teams bring their brand, website, and social content into one clear, consistent presence.',
   primary_cta_label: 'Explore selected work',
   primary_cta_href: '/work',
   secondary_cta_label: 'Start a conversation',
@@ -95,21 +95,21 @@ export const DEFAULT_HERO: HeroContent = {
 }
 
 export const DEFAULT_ABOUT_TEASER: AboutTeaserContent = {
-  heading: 'A personal creative practice, built around your brand',
+  heading: 'Thoughtful creative, with a personal touch',
   body:
-    'Yats is my independent creative practice. I help small businesses shape their visual identity, build useful websites, and keep their social presence consistent.',
+    'Yats is Yatin Sharma’s independent creative practice. I work across brand identity, useful websites, and social content, helping small businesses keep their digital presence clear and consistent.',
   image_url: '',
-  skills: ['Visual & brand design', 'Website design', 'Social media management', 'Content systems'],
+  skills: ['Brand identity', 'Website design', 'Social media management', 'Content systems'],
 }
 
 export const DEFAULT_CTA: CtaContent = {
   heading: 'Have a project in mind?',
   body:
-    "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.",
-  primary_cta_label: 'Start a Conversation',
+    "Tell me what you're building and where you could use a thoughtful creative partner.",
+  primary_cta_label: 'Start a conversation',
   primary_cta_href: '/contact',
-  secondary_cta_label: 'Book a Call',
-  secondary_cta_href: '/book',
+  secondary_cta_label: 'More about Yats',
+  secondary_cta_href: '/about',
 }
 
 export const DEFAULT_ABOUT_PAGE: AboutPageContent = {
@@ -117,7 +117,7 @@ export const DEFAULT_ABOUT_PAGE: AboutPageContent = {
   intro:
     "I'm Yatin Sharma, an independent creative working across brand design, websites, and social media.",
   bio_paragraphs: [
-    'Yats is my personal creative practice for helping small businesses build a more thoughtful online presence. My work brings visual identity, clear web experiences, and social content together.',
+    'Yats is my personal creative practice for helping small businesses build a more considered online presence. My work brings visual identity, clear web experiences, and social content together.',
     'I like projects with a clear purpose and room for good craft. I work from the first ideas through the final details, keeping the process direct and collaborative.',
     "I'm growing this practice through hands-on freelance work and personal projects, and I'm open to remote collaborations worldwide.",
   ],
@@ -136,13 +136,13 @@ export const DEFAULT_ABOUT_PAGE: AboutPageContent = {
     { category: 'Tools', items: ['Figma', 'GitHub', 'Tailwind CSS', 'Supabase'] },
   ],
   experience: [],
-  cta_heading: "Let's build something clear and useful",
+  cta_heading: "Let's make something clear and useful",
   cta_body: "Tell me what you're working on and where you need a hand.",
 }
 
 export const DEFAULT_SITE_SETTINGS: SiteSettingsContent = {
   site_name: 'Yats',
-  footer_tagline: 'Brand design, websites, and social media support for growing businesses.',
+  footer_tagline: 'Brand identity, websites, and social media for growing businesses.',
   social_github: 'https://github.com/Yatin-x017',
   social_linkedin: 'https://www.linkedin.com/in/yatin-sharma-87b15b37a/',
   contact_email: 'yatinx017@gmail.com',
