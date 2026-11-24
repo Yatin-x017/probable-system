@@ -18,7 +18,7 @@ export default function YatsLogo({ className = '', compact = false, animated = f
         <motion.path
           d="M4.5 6.5 16.3 20 28.5 6.5M16.3 20 13 27.2C11.2 31.3 8.5 33.1 4.5 32.1"
           fill="none"
-          stroke={light ? '#F6F1E8' : '#F05B43'}
+          stroke={light ? '#F8F6F1' : '#D24B3E'}
           strokeWidth="4.5"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -32,9 +32,9 @@ export default function YatsLogo({ className = '', compact = false, animated = f
           initial={draw ? { opacity: 0, x: -4 } : false}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.35, delay: 0.42, ease: [0.22, 1, 0.36, 1] }}
-          className={`font-display text-[1.55rem] font-extrabold leading-none tracking-[-0.075em] ${light ? 'text-[#F6F1E8]' : 'text-[#182338]'}`}
+          className={`font-display text-[1.55rem] font-extrabold leading-none tracking-[-0.075em] ${light ? 'text-[#F8F6F1]' : 'text-[#121212]'}`}
         >
-          yats<span className="text-[#F05B43]">.</span>
+          yats<span className="text-[#D24B3E]">.</span>
         </motion.span>
       )}
     </span>
