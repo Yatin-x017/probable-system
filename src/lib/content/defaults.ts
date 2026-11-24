@@ -83,27 +83,27 @@ export interface MarqueeContent {
 }
 
 export const DEFAULT_HERO: HeroContent = {
-  heading_top: 'Make your',
-  heading_highlight: 'brand',
-  heading_bottom: 'feel like you.',
+  heading_top: 'Good work.',
+  heading_highlight: 'Good taste.',
+  heading_bottom: 'Good follow-through.',
   subheading:
-    'I help small teams bring their brand, website, and social content into one clear, consistent presence.',
-  primary_cta_label: 'Explore selected work',
+    'I’m Yatin. I help small businesses bring brand, web, and social into one recognisable presence — with care in the details and a clear reason behind every choice.',
+  primary_cta_label: 'See what I make',
   primary_cta_href: '/work',
-  secondary_cta_label: 'Start a conversation',
+  secondary_cta_label: 'Tell me what you’re building',
   secondary_cta_href: '/contact',
 }
 
 export const DEFAULT_ABOUT_TEASER: AboutTeaserContent = {
-  heading: 'Thoughtful creative, with a personal touch',
+  heading: 'A small practice, with the whole picture in mind.',
   body:
-    'Yats is Yatin Sharma’s independent creative practice. I work across brand identity, useful websites, and social content, helping small businesses keep their digital presence clear and consistent.',
+    'Yats is Yatin Sharma’s independent creative practice. I work across identity, useful websites, and social content so the whole business feels like itself wherever people meet it.',
   image_url: '',
   skills: ['Brand identity', 'Website design', 'Social media management', 'Content systems'],
 }
 
 export const DEFAULT_CTA: CtaContent = {
-  heading: 'Have a project in mind?',
+  heading: 'Got something good in mind?',
   body:
     "Tell me what you're building and where you could use a thoughtful creative partner.",
   primary_cta_label: 'Start a conversation',
@@ -142,7 +142,7 @@ export const DEFAULT_ABOUT_PAGE: AboutPageContent = {
 
 export const DEFAULT_SITE_SETTINGS: SiteSettingsContent = {
   site_name: 'Yats',
-  footer_tagline: 'Brand identity, websites, and social media for growing businesses.',
+  footer_tagline: 'Brand, web, and social made to feel like the same business.',
   social_github: 'https://github.com/Yatin-x017',
   social_linkedin: 'https://www.linkedin.com/in/yatin-sharma-87b15b37a/',
   contact_email: 'yatinx017@gmail.com',
