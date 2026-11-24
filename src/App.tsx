@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Outlet, useLocation, useParams } from 'react-router-dom'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { Analytics } from '@vercel/analytics/react'
@@ -11,39 +12,36 @@ import TourLauncher from '@/components/tour/TourLauncher'
 import CookieConsent from '@/components/CookieConsent'
 import PageErrorBoundary from '@/components/PageErrorBoundary'
 
-// Public Layout
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
+const Navbar = lazy(() => import('@/components/Navbar'))
+const Footer = lazy(() => import('@/components/Footer'))
 
-// Public Pages
-import Home from '@/pages/Home'
-import Work from '@/pages/Work'
-import WorkDetail from '@/pages/WorkDetail'
-import About from '@/pages/About'
-import Blog from '@/pages/Blog'
-import BlogDetail from '@/pages/BlogDetail'
-import Contact from '@/pages/Contact'
-import Book from '@/pages/Book'
-import Pricing from '@/pages/Pricing'
-import TermsOfUse from '@/pages/legal/TermsOfUse'
-import PrivacyPolicy from '@/pages/legal/PrivacyPolicy'
-import TermsOfService from '@/pages/legal/TermsOfService'
-import DataPolicy from '@/pages/legal/DataPolicy'
-import CookiePreferences from '@/pages/legal/CookiePreferences'
+const Home = lazy(() => import('@/pages/Home'))
+const Work = lazy(() => import('@/pages/Work'))
+const WorkDetail = lazy(() => import('@/pages/WorkDetail'))
+const About = lazy(() => import('@/pages/About'))
+const Blog = lazy(() => import('@/pages/Blog'))
+const BlogDetail = lazy(() => import('@/pages/BlogDetail'))
+const Contact = lazy(() => import('@/pages/Contact'))
+const Book = lazy(() => import('@/pages/Book'))
+const Pricing = lazy(() => import('@/pages/Pricing'))
+const TermsOfUse = lazy(() => import('@/pages/legal/TermsOfUse'))
+const PrivacyPolicy = lazy(() => import('@/pages/legal/PrivacyPolicy'))
+const TermsOfService = lazy(() => import('@/pages/legal/TermsOfService'))
+const DataPolicy = lazy(() => import('@/pages/legal/DataPolicy'))
+const CookiePreferences = lazy(() => import('@/pages/legal/CookiePreferences'))
 
-// Admin
-import AdminLayout from '@/admin/AdminLayout'
-import AdminLogin from '@/admin/Login'
-import AdminDashboard from '@/admin/Dashboard'
-import AdminContent from '@/admin/Content'
-import AdminProjects from '@/admin/Projects'
-import AdminProjectEdit from '@/admin/ProjectEdit'
-import AdminBlog from '@/admin/Blog'
-import AdminBlogEdit from '@/admin/BlogEdit'
-import AdminMessages from '@/admin/Messages'
-import AdminCalendar from '@/admin/Calendar'
-import AdminPayments from '@/admin/Payments'
-import AdminAISettings from '@/admin/AISettings'
+const AdminLayout = lazy(() => import('@/admin/AdminLayout'))
+const AdminLogin = lazy(() => import('@/admin/Login'))
+const AdminDashboard = lazy(() => import('@/admin/Dashboard'))
+const AdminContent = lazy(() => import('@/admin/Content'))
+const AdminProjects = lazy(() => import('@/admin/Projects'))
+const AdminProjectEdit = lazy(() => import('@/admin/ProjectEdit'))
+const AdminBlog = lazy(() => import('@/admin/Blog'))
+const AdminBlogEdit = lazy(() => import('@/admin/BlogEdit'))
+const AdminMessages = lazy(() => import('@/admin/Messages'))
+const AdminCalendar = lazy(() => import('@/admin/Calendar'))
+const AdminPayments = lazy(() => import('@/admin/Payments'))
+const AdminAISettings = lazy(() => import('@/admin/AISettings'))
 
 // AdminProjectEdit/AdminBlogEdit read `id` from useParams themselves and treat
 // `id === 'new'` as create-mode (see those components). Both routes below
@@ -106,6 +104,13 @@ function App() {
       <AuthProvider>
         <ScrollProvider>
           <TourProvider>
+            <Suspense
+              fallback={
+                <div role="status" className="grid min-h-[50svh] place-items-center bg-[#f7f5ef] text-sm text-[#69726d]">
+                  Loading…
+                </div>
+              }
+            >
             <Routes>
               {/* Public Routes */}
               <Route element={<PublicLayout />}>
@@ -140,6 +145,7 @@ function App() {
                 <Route path="ai" element={<AdminAISettings />} />
               </Route>
             </Routes>
+            </Suspense>
             <TourOverlay />
             <TourLauncher />
           </TourProvider>

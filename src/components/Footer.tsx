@@ -15,10 +15,10 @@ const REVEAL_THRESHOLD = 48
 
 const navLinks = [
   { label: 'Work', href: '/work' },
+  { label: 'Services', href: '/pricing' },
   { label: 'About', href: '/about' },
-  { label: 'Blog', href: '/blog' },
+  { label: 'Journal', href: '/blog' },
   { label: 'Contact', href: '/contact' },
-  { label: 'Book a Call', href: '/book' },
 ]
 
 const legalLinks = [
@@ -89,8 +89,8 @@ export default function Footer() {
         >
           {/* Brand */}
           <motion.div variants={stagger.item}>
-            <Link to="/" className="text-lg font-semibold text-gray-900">
-              {settings.site_name}
+            <Link to="/" className="inline-flex items-center transition-opacity hover:opacity-70">
+              <img src="/yats-logo.svg" alt={settings.site_name} className="h-9 w-auto" />
             </Link>
             <p className="mt-2 text-sm text-gray-500 max-w-xs">
               {settings.footer_tagline}
