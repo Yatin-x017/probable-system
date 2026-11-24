@@ -3,7 +3,8 @@ import { ArrowRight, ExternalLink } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { motion, type Variants } from 'framer-motion'
 import HeroScene from '@/components/HeroScene'
-import VideoPlaceholder from '@/components/VideoPlaceholder'
+import GlassReveal from '@/components/GlassRevealYats'
+import GithubProjects from '@/components/GithubProjects'
 import { ThreeDMarquee } from '@/components/ui/3d-marquee'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -110,6 +111,19 @@ export default function Home() {
           animate="show"
           className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
         >
+          <motion.div variants={heroItem} className="mb-7 flex justify-center">
+            <GlassReveal
+              label="Yats liquid glass mark"
+              look="dark"
+              background="#101318"
+              logoColor="#8de2d9"
+              tileSize={128}
+              logoScale={0.62}
+              finalScale={0.74}
+              loop={false}
+              className="h-24 w-24 rounded-3xl border border-white/10 shadow-2xl"
+            />
+          </motion.div>
           <motion.h1
             variants={heroItem}
             className="text-display-lg"
@@ -244,6 +258,8 @@ export default function Home() {
         </div>
       </section>
 
+      <GithubProjects />
+
       {/* About Teaser */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -287,11 +303,16 @@ export default function Home() {
                   className="aspect-[4/3] w-full object-cover rounded-lg shadow-layer-md"
                 />
               ) : (
-                <VideoPlaceholder
-                  color="#6BCB77"
-                  label="Add an image in Admin → Content → Home"
-                  className="aspect-[4/3] w-full"
-                />
+                <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-lg bg-[#11161A]">
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_45%,rgba(99,212,198,0.18),transparent_55%)]"
+                  />
+                  <img src="/yats-mark.svg" alt="" className="relative z-10 h-32 w-32 sm:h-40 sm:w-40" />
+                  <span className="absolute bottom-6 left-6 text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
+                    Yats · design / web / social
+                  </span>
+                </div>
               )}
             </motion.div>
           </div>

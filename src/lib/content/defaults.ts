@@ -83,23 +83,23 @@ export interface MarqueeContent {
 }
 
 export const DEFAULT_HERO: HeroContent = {
-  heading_top: 'Designer & Developer',
-  heading_highlight: 'crafting digital',
-  heading_bottom: 'experiences',
+  heading_top: 'Designer &',
+  heading_highlight: 'digital creator',
+  heading_bottom: 'for growing brands',
   subheading:
-    "I design and build thoughtful, pixel-perfect interfaces that help businesses connect with their audience.",
-  primary_cta_label: 'View My Work',
+    'I create clear brand visuals, websites, and social content for small teams and independent businesses.',
+  primary_cta_label: 'Explore selected work',
   primary_cta_href: '/work',
-  secondary_cta_label: 'Get in Touch',
+  secondary_cta_label: 'Start a conversation',
   secondary_cta_href: '/contact',
 }
 
 export const DEFAULT_ABOUT_TEASER: AboutTeaserContent = {
-  heading: "Hi, I'm Yatin",
+  heading: 'A personal creative practice, built around your brand',
   body:
-    "I'm a multidisciplinary designer and developer based in [your city]. With over [X] years of experience, I specialize in creating digital products that are both beautiful and functional. My approach combines strategic thinking with meticulous attention to detail.",
+    'Yats is my independent creative practice. I help small businesses shape their visual identity, build useful websites, and keep their social presence consistent.',
   image_url: '',
-  skills: ['UI/UX Design', 'React', 'TypeScript', 'Three.js', 'Node.js'],
+  skills: ['Visual & brand design', 'Website design', 'Social media management', 'Content systems'],
 }
 
 export const DEFAULT_CTA: CtaContent = {
@@ -113,57 +113,37 @@ export const DEFAULT_CTA: CtaContent = {
 }
 
 export const DEFAULT_ABOUT_PAGE: AboutPageContent = {
-  heading: 'About',
+  heading: 'About Yats',
   intro:
-    "I'm Yatin Sharma — a designer and developer who believes great digital experiences sit at the intersection of clarity, craft, and care.",
+    "I'm Yatin Sharma, an independent creative working across brand design, websites, and social media.",
   bio_paragraphs: [
-    "With over [X] years in the industry, I've had the privilege of working with startups, agencies, and established brands to bring their digital visions to life. My work spans from initial concept and user research through to polished, production-ready code.",
-    "I approach every project with a simple philosophy: understand the user, respect the constraints, and sweat the details. Whether I'm wireframing a new feature or optimizing a React component, I'm always thinking about the person on the other side of the screen.",
-    "When I'm not designing or coding, you'll find me [your hobby], exploring new technologies, or contributing to open-source projects.",
+    'Yats is my personal creative practice for helping small businesses build a more thoughtful online presence. My work brings visual identity, clear web experiences, and social content together.',
+    'I like projects with a clear purpose and room for good craft. I work from the first ideas through the final details, keeping the process direct and collaborative.',
+    "I'm growing this practice through hands-on freelance work and personal projects, and I'm open to remote collaborations worldwide.",
   ],
   portrait_url: '',
-  location: '[Your City, Country]',
-  years_experience: '[X]+',
+  location: 'Remote · worldwide',
+  years_experience: '',
   quick_facts: [
-    { label: 'Focus', value: 'UI/UX & Frontend' },
-    { label: 'Location', value: '[Your City]' },
-    { label: 'Timezone', value: '[Your TZ]' },
-    { label: 'Availability', value: 'Open to projects' },
+    { label: 'Focus', value: 'Brand & digital presence' },
+    { label: 'Working style', value: 'Independent & collaborative' },
+    { label: 'Availability', value: 'Open to freelance projects' },
   ],
   skills: [
-    { category: 'Design', items: ['UI/UX Design', 'Design Systems', 'Figma', 'Prototyping', 'User Research'] },
-    { category: 'Frontend', items: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Three.js'] },
-    { category: 'Backend', items: ['Node.js', 'PostgreSQL', 'Supabase', 'REST APIs', 'GraphQL'] },
-    { category: 'Tools', items: ['Git', 'Vercel', 'Docker', 'VS Code', 'Claude'] },
+    { category: 'Brand & Visual', items: ['Visual identity', 'Social media design', 'Content systems'] },
+    { category: 'Web', items: ['UI design', 'Responsive websites', 'React', 'TypeScript'] },
+    { category: 'Social', items: ['Social media management', 'Content planning', 'Brand consistency'] },
+    { category: 'Tools', items: ['Figma', 'GitHub', 'Tailwind CSS', 'Supabase'] },
   ],
-  experience: [
-    {
-      title: 'Senior Product Designer',
-      company: 'Company Name',
-      period: '2022 — Present',
-      description: 'Leading design for core product features, mentoring junior designers, and establishing design system standards.',
-    },
-    {
-      title: 'UI/UX Designer & Developer',
-      company: 'Agency Name',
-      period: '2019 — 2022',
-      description: 'Designed and built websites and web applications for clients across fintech, healthcare, and e-commerce.',
-    },
-    {
-      title: 'Frontend Developer',
-      company: 'Startup Name',
-      period: '2017 — 2019',
-      description: 'Built React components, implemented responsive designs, and collaborated with the design team on product iterations.',
-    },
-  ],
-  cta_heading: "Let's build something together",
-  cta_body: "I'm always interested in hearing about new projects and opportunities.",
+  experience: [],
+  cta_heading: "Let's build something clear and useful",
+  cta_body: "Tell me what you're working on and where you need a hand.",
 }
 
 export const DEFAULT_SITE_SETTINGS: SiteSettingsContent = {
-  site_name: 'Yatin Sharma',
-  footer_tagline: 'Designer & developer crafting thoughtful digital experiences.',
-  social_github: 'https://github.com',
+  site_name: 'Yats',
+  footer_tagline: 'Brand design, websites, and social media support for growing businesses.',
+  social_github: 'https://github.com/Yatin-x017',
   social_linkedin: 'https://www.linkedin.com/in/yatin-sharma-87b15b37a/',
   contact_email: 'yatinx017@gmail.com',
 }
@@ -171,7 +151,7 @@ export const DEFAULT_SITE_SETTINGS: SiteSettingsContent = {
 export const DEFAULT_CONTACT_PAGE: ContactPageContent = {
   intro: "Have a project in mind, a question, or just want to say hello? I'd love to hear from you.",
   email: 'yatinx017@gmail.com',
-  location: '[Your City, Country]',
+  location: 'Remote · worldwide',
 }
 
 export const DEFAULT_MARQUEE: MarqueeContent = {
