@@ -106,7 +106,7 @@ function App() {
           <TourProvider>
             <Suspense
               fallback={
-                <div role="status" className="grid min-h-[50svh] place-items-center bg-[#f7f5ef] text-sm text-[#69726d]">
+                <div role="status" className="grid min-h-[50svh] place-items-center bg-[#f6f1e8] text-sm text-[#697282]">
                   Loading…
                 </div>
               }
