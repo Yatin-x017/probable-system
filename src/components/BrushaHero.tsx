@@ -79,29 +79,29 @@ const NAV_INTRO = {
   centreScale: { desktop: 2.8, mobile: 2.2 },
 
   // The coral line draws left → right
-  line: { delay: 0.3, duration: 0.9 },
+  line: { delay: 0.16, duration: 0.55 },
 
   // The line erases left → right as the letters form
-  transform: { start: 1.2, duration: 1.5 },
-  letterDuration: 0.5,
+  transform: { start: 0.68, duration: 0.86 },
+  letterDuration: 0.32,
 
   // How far along the erase each letter starts forming as the line travels left to right
   letterAt: [0.18, 0.43, 0.68, 0.88],
 
   // Centre → navbar
-  move: { delay: 3.2, duration: 1.2 },
-  links: { start: 4.1, stagger: 0.09 },
-  cta: 4.4,
+  move: { delay: 1.82, duration: 0.65 },
+  links: { start: 2.05, stagger: 0.06 },
+  cta: 2.2,
 
   // The plain logo image takes over and the intro layer is removed
-  done: 4.6,
+  done: 2.5,
 
   // Letter boundaries in the Yats wordmark, measured against its 150 px width
   letterEdges: [0, 60, 80, 98, 150]
 }
 
 // The hero waits for the logo to land in the navbar
-const INTRO_START = 4.4
+const INTRO_START = 2.5
 
 /**
  * Motion. Times are in seconds. One easing for the whole intro, no springs that
@@ -932,7 +932,7 @@ const INK = '#e04a3c'
 const SPAN = NAV_INTRO.transform.start + NAV_INTRO.transform.duration - NAV_INTRO.line.delay
 
 /**
- * One coral line for the brand intro: drawn left → right (a loose curve with a loop over the B),
+ * One coral line for the brand intro: drawn left → right as a loose flourish,
  * then erased left → right while the letters form where its tail passes
  */
 const LumoraIntroLine = (props: SVGProps< SVGSVGElement >) => {
@@ -1247,97 +1247,6 @@ const LumoraMeadowFlowers = (props: SVGProps< SVGSVGElement >) => {
 
 
   return { LumoraMeadowFlowers }
-})()
-
-const { LumoraPaperTexture } = (() => {
-
-/**
- * Filter definitions only: each piece (.lm-piece) gets a mottled watercolour / cut-paper texture clipped to its
- * outline, padded for shapes that overhang their box. Brightness-neutral: each noise layer scales the colour by
- * (1 − k/2 + k·noise), so it lightens and darkens around the true colour instead of dimming it
- */
-const LumoraPaperTexture = (props: SVGProps< SVGSVGElement >) => {
-  return (
-    <svg width='0' height='0' aria-hidden focusable='false' style={{ position: 'absolute' }} {...props}>
-      <filter id='lumora-paper' x='-20%' y='-20%' width='140%' height='140%' colorInterpolationFilters='sRGB'>
-        {/* soft blotches, like pigment pooling in watercolor paper */}
-        <feTurbulence type='fractalNoise' baseFrequency='0.018 0.024' numOctaves='3' seed='7' result='blotNoise' />
-        <feColorMatrix in='blotNoise' type='matrix' values='1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1' result='blot' />
-        <feComposite
-          in='SourceGraphic'
-          in2='blot'
-          operator='arithmetic'
-          k1='0.22'
-          k2='0.89'
-          k3='0'
-          k4='0'
-          result='blotted'
-        />
-
-        {/* fine fibre grain */}
-        <feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' seed='3' result='grainNoise' />
-        <feColorMatrix
-          in='grainNoise'
-          type='matrix'
-          values='1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1'
-          result='grain'
-        />
-        <feComposite
-          in='blotted'
-          in2='grain'
-          operator='arithmetic'
-          k1='0.12'
-          k2='0.94'
-          k3='0'
-          k4='0'
-          result='textured'
-        />
-
-        <feComposite in='textured' in2='SourceGraphic' operator='in' />
-      </filter>
-      {/* same texture, for the ground and grass that reach far past the frame */}
-      <filter id='lumora-paper-wide' x='-55%' y='-20%' width='210%' height='140%' colorInterpolationFilters='sRGB'>
-        {/* soft blotches, like pigment pooling in watercolor paper */}
-        <feTurbulence type='fractalNoise' baseFrequency='0.018 0.024' numOctaves='3' seed='7' result='blotNoise' />
-        <feColorMatrix in='blotNoise' type='matrix' values='1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1' result='blot' />
-        <feComposite
-          in='SourceGraphic'
-          in2='blot'
-          operator='arithmetic'
-          k1='0.22'
-          k2='0.89'
-          k3='0'
-          k4='0'
-          result='blotted'
-        />
-
-        {/* fine fibre grain */}
-        <feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' seed='3' result='grainNoise' />
-        <feColorMatrix
-          in='grainNoise'
-          type='matrix'
-          values='1 0 0 0 0  1 0 0 0 0  1 0 0 0 0  0 0 0 0 1'
-          result='grain'
-        />
-        <feComposite
-          in='blotted'
-          in2='grain'
-          operator='arithmetic'
-          k1='0.12'
-          k2='0.94'
-          k3='0'
-          k4='0'
-          result='textured'
-        />
-
-        <feComposite in='textured' in2='SourceGraphic' operator='in' />
-      </filter>
-    </svg>
-  )
-}
-
-
-  return { LumoraPaperTexture }
 })()
 
 const { LumoraPinkFlower } = (() => {
@@ -2288,9 +2197,18 @@ const HeroIllustration = () => {
         ref={ref}
         aria-hidden
         animate={reduce ? LOOPS_STILL : loopsRun ? LOOPS_RUN : LOOPS_REST}
+        initial={reduce ? false : { opacity: 0, filter: 'blur(7px)' }}
+        variants={{
+          [LOOPS_RUN]: {
+            opacity: 1,
+            filter: 'blur(0px)',
+            transition: { delay: INTRO.artworkStart, duration: 0.45, ease: EASE },
+          },
+          [LOOPS_REST]: { opacity: 1, filter: 'blur(0px)', transition: { duration: 0.12 } },
+          [LOOPS_STILL]: { opacity: 1, filter: 'blur(0px)', transition: { duration: 0 } },
+        }}
         className='lm-illustration pointer-events-none z-0 select-none'
       >
-        <LumoraPaperTexture />
         {PIECES.map(piece => {
           const { name, Svg, minor } = piece
           const slot: IllustrationSlotType = ILLUSTRATION_LAYOUT[name]
@@ -2477,8 +2395,7 @@ const BLOCK_CSS = `/* Theme tokens of the block (its @theme), scoped to the comp
   inset: 0;
   pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.3 0 0 0 0 0.25 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: multiply;
-  opacity: 0.22;
+  opacity: 0.1;
 }
 
 .lm-pad-x {
@@ -2534,15 +2451,15 @@ const BLOCK_CSS = `/* Theme tokens of the block (its @theme), scoped to the comp
   aspect-ratio: 1424 / 457;
 }
 
-/* Paper texture per piece (defined by LumoraPaperTexture). Per piece rather than on
-   the whole strip, so a moving leaf only re-filters its own piece, not everything. */
+/* Keep the painted pieces filter-free while they sway. The surface grain provides
+   texture without forcing each animated SVG layer through its own filter. */
 .lm-piece {
-  filter: url(#lumora-paper);
+  filter: none;
 }
 
-/* layers that run far past the frame's edges (ground, grass) get a wider filter region */
+/* Wide ground and grass layers stay filter-free as well. */
 .lm-piece.lm-piece-wide {
-  filter: url(#lumora-paper-wide);
+  filter: none;
 }
 
 /* The artwork ignores the pointer (so it never blocks the copy or CTAs), except
