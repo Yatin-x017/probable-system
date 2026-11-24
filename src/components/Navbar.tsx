@@ -10,9 +10,8 @@ import { cn } from '@/lib/utils'
 
 const navLinks = [
   { label: 'Work', href: '/work' },
+  { label: 'Services', href: '/pricing' },
   { label: 'About', href: '/about' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Blog', href: '/blog' },
   { label: 'Contact', href: '/contact' },
 ]
 
@@ -61,21 +60,17 @@ export default function Navbar() {
         <motion.div
           initial={false}
           animate={{
-            backgroundColor: scrolled ? 'rgba(255,255,255,0.82)' : 'rgba(255,255,255,0)',
-            borderColor: scrolled ? 'rgba(0,0,0,0.06)' : 'rgba(0,0,0,0)',
+            backgroundColor: scrolled ? 'rgba(247,245,239,0.92)' : 'rgba(247,245,239,0.72)',
+            borderColor: scrolled ? 'rgba(45,61,53,0.10)' : 'rgba(45,61,53,0.08)',
             boxShadow: scrolled
               ? '0 8px 30px -12px rgb(0 0 0 / 0.12)'
               : '0 0px 0px 0 rgb(0 0 0 / 0)',
           }}
           transition={springs.smooth}
-          // backdrop-blur is only mounted once there's an actual white surface
-          // to blur (i.e. once scrolled). Leaving it on permanently — even at
-          // 0% background opacity — was sampling the WebGL hero underneath
-          // and rendering as a hazy, blocky smear instead of a clean pane of
-          // glass, which killed the premium feel of the header.
+          // The translucent surface stays legible across the hero and tightens on scroll.
           className={cn(
-            'mx-auto max-w-6xl rounded-2xl border',
-            scrolled && 'backdrop-blur-xl'
+            'mx-auto max-w-7xl rounded-full border',
+            'backdrop-blur-xl'
           )}
         >
           <div className="flex items-center justify-between px-4 sm:px-6 h-12">
@@ -111,7 +106,7 @@ export default function Navbar() {
                 </Link>
               ))}
               <Button asChild size="sm" className="ml-2 rounded-full">
-                <Link to="/book" data-tour="nav-book">Book a Call</Link>
+                <Link to="/contact" data-tour="nav-contact">Start a project</Link>
               </Button>
             </div>
 
@@ -181,7 +176,7 @@ export default function Navbar() {
                   </motion.div>
                 ))}
                 <Button asChild className="w-full mt-2 rounded-xl">
-                  <Link to="/book">Book a Call</Link>
+                  <Link to="/contact">Start a project</Link>
                 </Button>
               </div>
             </motion.div>
