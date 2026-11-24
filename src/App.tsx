@@ -70,7 +70,7 @@ function PublicLayout() {
   const prefersReducedMotion = useReducedMotion()
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+      {location.pathname !== '/' && <Navbar />}
       <main className="flex-1">
         <AnimatePresence
           mode="wait"
