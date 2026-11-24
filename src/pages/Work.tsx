@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { ArrowUpRight, Github } from 'lucide-react'
+import { motion, useReducedMotion } from 'framer-motion'
 import { getPublishedProjects } from '@/lib/supabase/api'
 import { Skeleton } from '@/components/ui/skeleton'
-import { EmptyState } from '@/components/ui/empty-state'
-import { useRevealUp, useStagger } from '@/lib/motion'
 import type { Database } from '@/types/supabase'
 
 type Project = Database['public']['Tables']['projects']['Row']
@@ -12,101 +11,53 @@ type Project = Database['public']['Tables']['projects']['Row']
 export default function Work() {
   const [projects, setProjects] = useState<Project[]>([])
   const [loading, setLoading] = useState(true)
-  const revealUp = useRevealUp()
-  const stagger = useStagger()
+  const reducedMotion = useReducedMotion()
 
   useEffect(() => {
-    getPublishedProjects()
-      .then(setProjects)
-      .catch(console.error)
-      .finally(() => setLoading(false))
+    getPublishedProjects().then(setProjects).catch(console.error).finally(() => setLoading(false))
   }, [])
 
   return (
-    <div className="pt-24 pb-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div {...revealUp} className="mb-12">
-          <h1 className="text-display-md text-gray-900">Work</h1>
-          <p className="mt-3 text-lg text-gray-500 max-w-2xl">
-            A collection of projects I've worked on — from brand identity and
-            design systems to full-stack web applications.
-          </p>
+    <div className="min-h-[75svh] bg-[#f6f1e8] pb-20 pt-[120px] text-[#182338] sm:pb-28">
+      <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
+        <motion.div initial={reducedMotion ? false : { opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45 }} className="mb-12 max-w-4xl border-b border-[#182338]/20 pb-8 sm:mb-16">
+          <h1 className="font-display text-[clamp(3.5rem,8vw,7rem)] font-extrabold leading-[0.88] tracking-[-0.075em]">Work<span className="text-[#f05b43]">.</span></h1>
+          <p className="mt-6 max-w-2xl text-base leading-7 text-[#555f6f] sm:text-lg sm:leading-8">A few real things I’ve made, tested, and learned from — in brand, web, and product.</p>
         </motion.div>
 
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="bg-white rounded-xl border border-gray-100 overflow-hidden">
-                <Skeleton className="aspect-[16/9] w-full rounded-none bg-gray-100" />
-                <div className="p-5 space-y-3">
-                  <Skeleton className="h-4 w-1/4 bg-gray-100" />
-                  <Skeleton className="h-6 w-2/3 bg-gray-100" />
-                  <Skeleton className="h-4 w-full bg-gray-100" />
+          <div className="grid gap-x-8 gap-y-12 md:grid-cols-2">
+            {[0, 1, 2, 3].map((item) => <div key={item}><Skeleton className="aspect-[1.18] rounded-none bg-[#e5dfd1]" /><Skeleton className="mt-5 h-6 w-1/2 rounded-none bg-[#e5dfd1]" /></div>)}
+          </div>
+        ) : projects.length > 0 ? (
+          <div className="grid gap-x-8 gap-y-14 md:grid-cols-2 lg:gap-x-12">
+            {projects.map((project, index) => (
+              <motion.article key={project.id} initial={false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} transition={{ duration: 0.42, delay: index * 0.05 }} className="group">
+                <Link to={`/work/${project.slug}`} className="block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#426fbd]">
+                  <div className="relative aspect-[1.18] overflow-hidden bg-[#182338]">
+                    {project.cover_image_url ? <img src={project.cover_image_url} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]" /> : <div className="grid h-full place-items-center px-6 text-center"><span className="font-display text-5xl font-bold tracking-[-0.055em] text-[#f6f1e8] sm:text-7xl">{project.title}</span></div>}
+                    <span className="absolute bottom-4 left-4 bg-[#f6f1e8] px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#182338]">{project.type?.[0] ?? 'Project'}</span>
+                  </div>
+                </Link>
+                <div className="flex items-start justify-between gap-5 pt-4">
+                  <div>
+                    <h2 className="font-display text-2xl font-bold tracking-[-0.045em]">{project.title}</h2>
+                    <p className="mt-2 max-w-xl text-sm leading-6 text-[#555f6f]">{project.summary}</p>
+                    {!!project.tech_stack?.length && <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#737988]">{project.tech_stack.join(' · ')}</p>}
+                  </div>
+                  <Link to={`/work/${project.slug}`} aria-label={`View ${project.title}`} className="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-[#182338]/25 text-[#182338] transition-colors hover:border-[#f05b43] hover:bg-[#f05b43]"><ArrowUpRight className="h-4 w-4" /></Link>
                 </div>
-              </div>
+              </motion.article>
             ))}
           </div>
         ) : (
-          <motion.div
-            variants={stagger.container}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: '-80px' }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
-          >
-            {projects.map((project) => (
-              <motion.div key={project.id} variants={stagger.item}>
-                <Link
-                  to={`/work/${project.slug}`}
-                  className="group block bg-white rounded-xl border border-gray-100 overflow-hidden shadow-layer-sm hover:shadow-layer-lg transition-shadow duration-300"
-                >
-                  <div className="aspect-[16/9] bg-gray-50 relative overflow-hidden">
-                    {project.cover_image_url ? (
-                      <img
-                        src={project.cover_image_url}
-                        alt={project.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-50" />
-                    )}
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center gap-2 mb-3">
-                      {project.type?.map((t) => (
-                        <span
-                          key={t}
-                          className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                    <h2 className="text-xl font-semibold text-gray-900 group-hover:text-sky transition-colors">
-                      {project.title}
-                    </h2>
-                    <p className="mt-2 text-gray-500 line-clamp-2">{project.summary}</p>
-                    {project.tech_stack && project.tech_stack.length > 0 && (
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {project.tech_stack.map((tech) => (
-                          <span
-                            key={tech}
-                            className="text-xs px-2 py-1 bg-gray-50 text-gray-500 rounded-md"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
-
-        {!loading && projects.length === 0 && (
-          <EmptyState message="No projects published yet." />
+          <div className="flex flex-col gap-8 border-y border-[#182338]/20 py-10 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h2 className="font-display text-3xl font-bold tracking-[-0.05em] sm:text-4xl">The case studies are still taking shape.</h2>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-[#555f6f]">The public repos are here if you want to see what I’m building while I put together fuller project stories.</p>
+            </div>
+            <a href="https://github.com/Yatin-x017" target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center gap-2 bg-[#182338] px-5 py-3 text-sm font-semibold text-[#f6f1e8] transition-colors hover:bg-[#f05b43] hover:text-[#182338]">Browse GitHub<Github className="h-4 w-4" /><ArrowUpRight className="h-4 w-4" /></a>
+          </div>
         )}
       </div>
     </div>
