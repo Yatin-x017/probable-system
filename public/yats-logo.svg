@@ -1,6 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 42" role="img" aria-labelledby="title">
   <title id="title">yats.</title>
-  <path d="M6 7 19 20 32 7M19 20l-3 7c-1.5 3.2-4.2 4.5-7.5 3.6" fill="none" stroke="#F05B43" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="44" y="31" fill="#182338" font-family="Archivo, sans-serif" font-size="31" font-weight="800" letter-spacing="-2.2">yats</text>
-  <circle cx="119" cy="28" r="2.7" fill="#F05B43"/>
+  <style>
+    @font-face { font-family: Archivo; font-weight: 800; src: url('/fonts/archivo-variable.woff2') format('woff2'); }
+  </style>
+  <path d="M6 7 19 20 32 7M19 20l-3 7c-1.5 3.2-4.2 4.5-7.5 3.6" fill="none" stroke="#D24B3E" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="44" y="31" fill="#121212" font-family="Archivo, sans-serif" font-size="31" font-weight="800" letter-spacing="-2.2">yats</text>
+  <circle cx="119" cy="28" r="2.7" fill="#D24B3E"/>
 </svg>
