@@ -79,29 +79,29 @@ const NAV_INTRO = {
   centreScale: { desktop: 2.8, mobile: 2.2 },
 
   // The coral line draws left → right
-  line: { delay: 0.16, duration: 0.55 },
+  line: { delay: 0.08, duration: 0.24 },
 
   // The line erases left → right as the letters form
-  transform: { start: 0.68, duration: 0.86 },
-  letterDuration: 0.32,
+  transform: { start: 0.18, duration: 0.34 },
+  letterDuration: 0.15,
 
   // How far along the erase each letter starts forming as the line travels left to right
   letterAt: [0.18, 0.43, 0.68, 0.88],
 
   // Centre → navbar
-  move: { delay: 1.82, duration: 0.65 },
-  links: { start: 2.05, stagger: 0.06 },
-  cta: 2.2,
+  move: { delay: 0.56, duration: 0.38 },
+  links: { start: 0.67, stagger: 0.04 },
+  cta: 0.72,
 
   // The plain logo image takes over and the intro layer is removed
-  done: 2.5,
+  done: 0.95,
 
   // Letter boundaries in the Yats wordmark, measured against its 150 px width
   letterEdges: [0, 60, 80, 98, 150]
 }
 
 // The hero waits for the logo to land in the navbar
-const INTRO_START = 2.5
+const INTRO_START = 0.9
 
 /**
  * Motion. Times are in seconds. One easing for the whole intro, no springs that
@@ -115,7 +115,7 @@ const EASE = [0.22, 1, 0.36, 1] as const
  * small details. The last item lands about 1.3s in
  */
 const INTRO = {
-  duration: 0.75,
+  duration: 0.42,
 
   // The navbar has its own sequence: NAV_INTRO
   nav: 0,
@@ -124,18 +124,18 @@ const INTRO = {
   cta: INTRO_START + 0.34,
 
   // Background pieces, staggered from here
-  artworkStart: INTRO_START + 0.36,
-  artworkStagger: 0.02,
+  artworkStart: INTRO_START + 0.18,
+  artworkStagger: 0.012,
 
   // The girl, a beat after the plants around her
-  figure: INTRO_START + 0.6,
+  figure: INTRO_START + 0.3,
 
   // The sun comes down from above into place
-  sun: { delay: INTRO_START + 0.3, duration: 1.3, from: -260 },
+  sun: { delay: INTRO_START + 0.16, duration: 0.72, from: -96 },
 
   // Bird, trail, star
-  detailStart: INTRO_START + 0.68,
-  detailStagger: 0.06
+  detailStart: INTRO_START + 0.34,
+  detailStagger: 0.035
 }
 
 // Cursor follow for the sun's eyes (mouse/trackpad only); hover reactions live in hover-motion.ts
@@ -2197,16 +2197,6 @@ const HeroIllustration = () => {
         ref={ref}
         aria-hidden
         animate={reduce ? LOOPS_STILL : loopsRun ? LOOPS_RUN : LOOPS_REST}
-        initial={reduce ? false : { opacity: 0, filter: 'blur(7px)' }}
-        variants={{
-          [LOOPS_RUN]: {
-            opacity: 1,
-            filter: 'blur(0px)',
-            transition: { delay: INTRO.artworkStart, duration: 0.45, ease: EASE },
-          },
-          [LOOPS_REST]: { opacity: 1, filter: 'blur(0px)', transition: { duration: 0.12 } },
-          [LOOPS_STILL]: { opacity: 1, filter: 'blur(0px)', transition: { duration: 0 } },
-        }}
         className='lm-illustration pointer-events-none z-0 select-none'
       >
         {PIECES.map(piece => {
@@ -2388,15 +2378,8 @@ const BLOCK_CSS = `/* Theme tokens of the block (its @theme), scoped to the comp
   }
 }
 
-/* Paper grain over the card and the artwork: the collage texture without images. */
-.lm-grain::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.3 0 0 0 0 0.25 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.1;
-}
+/* Keep the paper surface clean; a full-screen SVG noise layer was adding
+   texture but forcing another large composited layer over the animated art. */
 
 .lm-pad-x {
   padding-left: max(20px, calc(2.5 * var(--u)));
