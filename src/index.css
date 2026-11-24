@@ -1,4 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Figtree:wght@400;500;600;700&display=swap');
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 800;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  src: url('/fonts/archivo-variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/figtree-variable.woff2') format('woff2');
+}
 
 @tailwind base;
 @tailwind components;
@@ -6,33 +21,33 @@
 
 @layer base {
   :root {
-    --brand-paper: #f6f1e8;
-    --brand-ink: #182338;
-    --brand-coral: #f05b43;
-    --brand-sun: #efc65f;
-    --brand-blue: #426fbd;
+    --brand-paper: #f8f6f1;
+    --brand-ink: #121212;
+    --brand-coral: #d24b3e;
+    --brand-sun: #fec430;
+    --brand-leaf: #2f6b44;
     /* Base surface colors */
-    --background: 38 38% 94%;
-    --foreground: 218 32% 16%;
+    --background: 40 30% 96.5%;
+    --foreground: 0 0% 7%;
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 15%;
+    --card-foreground: 0 0% 7%;
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 15%;
+    --popover-foreground: 0 0% 7%;
 
     /* Primary — neutral dark for text/UI */
-    --primary: 218 32% 16%;
-    --primary-foreground: 0 0% 98%;
+    --primary: 0 0% 7%;
+    --primary-foreground: 40 30% 96%;
 
     /* Secondary — light grey surface */
-    --secondary: 41 31% 90%;
-    --secondary-foreground: 218 32% 16%;
+    --secondary: 40 30% 94%;
+    --secondary-foreground: 0 0% 7%;
 
     /* Muted — subtle grey */
     --muted: 42 17% 92%;
     --muted-foreground: 155 6% 43%;
 
     /* Accent — sky blue as default accent */
-    --accent: 10 84% 60%;
+    --accent: 7 61% 53%;
     --accent-foreground: 0 0% 100%;
 
     /* Destructive — coral red */
@@ -41,7 +56,7 @@
 
     --border: 40 12% 87%;
     --input: 40 12% 87%;
-    --ring: 10 84% 60%;
+    --ring: 7 61% 53%;
     --radius: 0.625rem;
 
     /* Sidebar colors */
@@ -75,24 +90,24 @@
 }
 
 ::selection {
-  color: #182338;
-  background: #efc65f;
+  color: #121212;
+  background: #fec430;
 }
 
-/* Utility classes for the 4 playful accent colors */
+/* Utility colours shared by the public pages and admin tools */
 @layer utilities {
-  .bg-sky { background-color: #5d8b7d; }
-  .bg-coral { background-color: #FF6B6B; }
-  .bg-sunny { background-color: #FFD93D; }
-  .bg-fresh { background-color: #6BCB77; }
-  .text-sky { color: #527d70; }
-  .text-coral { color: #FF6B6B; }
-  .text-sunny { color: #B89A00; }
-  .text-fresh { color: #2D7A38; }
-  .border-sky { border-color: #5d8b7d; }
-  .border-coral { border-color: #FF6B6B; }
-  .border-sunny { border-color: #FFD93D; }
-  .border-fresh { border-color: #6BCB77; }
+  .bg-sky { background-color: #2f6b44; }
+  .bg-coral { background-color: #d24b3e; }
+  .bg-sunny { background-color: #fec430; }
+  .bg-fresh { background-color: #428458; }
+  .text-sky { color: #2f6b44; }
+  .text-coral { color: #d24b3e; }
+  .text-sunny { color: #8c6a00; }
+  .text-fresh { color: #2f6b44; }
+  .border-sky { border-color: #2f6b44; }
+  .border-coral { border-color: #d24b3e; }
+  .border-sunny { border-color: #fec430; }
+  .border-fresh { border-color: #428458; }
 
   /* Animation utilities */
   .animate-fade-in {
