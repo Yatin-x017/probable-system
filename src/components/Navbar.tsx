@@ -84,7 +84,7 @@ export default function Navbar() {
               to="/"
               className="text-base font-semibold tracking-tight text-gray-900 transition-opacity hover:opacity-70"
             >
-              <img src="/yats-logo.svg" alt="Yats" className="h-9 w-auto" />
+              <img src="/yats-logo.svg" alt={siteName} className="h-9 w-auto" />
             </Link>
 
             {/* Desktop Nav — active link gets a sliding pill via layoutId */}
