@@ -50,16 +50,22 @@ export default function About() {
               </p>
             ))}
 
-            <div className="flex flex-wrap gap-4 pt-4">
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                <MapPin className="w-4 h-4" />
-                {location}
+            {(location || years_experience) && (
+              <div className="flex flex-wrap gap-4 pt-4">
+                {location && (
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <MapPin className="w-4 h-4" />
+                    {location}
+                  </div>
+                )}
+                {years_experience && (
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <Calendar className="w-4 h-4" />
+                    {years_experience} years experience
+                  </div>
+                )}
               </div>
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                <Calendar className="w-4 h-4" />
-                {years_experience} years experience
-              </div>
-            </div>
+            )}
           </div>
 
           <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
@@ -113,7 +119,7 @@ export default function About() {
           </motion.div>
         </section>
 
-        {/* Experience */}
+        {experience.length > 0 && (
         <section className="mb-20">
           <motion.h2 {...revealUp} className="text-display-sm text-gray-900 mb-8">
             Experience
@@ -147,6 +153,7 @@ export default function About() {
             ))}
           </motion.div>
         </section>
+        )}
 
         {/* CTA */}
         <motion.section {...revealUp} className="bg-[#F8F9FA] rounded-2xl p-8 sm:p-12 text-center">
