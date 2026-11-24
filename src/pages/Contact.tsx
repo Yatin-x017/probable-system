@@ -56,7 +56,7 @@ export default function Contact() {
   }
 
   return (
-    <div className="min-h-[75svh] bg-[#f6f1e8] pb-20 pt-[120px] text-[#182338] sm:pb-28">
+    <div className="min-h-[75svh] bg-[#f8f6f1] pb-20 pt-[120px] text-[#121212] sm:pb-28">
       <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           {/* Info */}
@@ -66,34 +66,34 @@ export default function Contact() {
             transition={springs.smooth}
             className="lg:col-span-1"
           >
-            <h1 className="font-display text-[clamp(3.6rem,8vw,7rem)] font-extrabold leading-[0.86] tracking-[-0.075em] text-[#182338]">Let’s talk<span className="text-[#f05b43]">.</span></h1>
+            <h1 className="font-display text-[clamp(3.6rem,8vw,7rem)] font-extrabold leading-[0.86] tracking-[-0.075em] text-[#121212]">Let’s talk<span className="text-[#d24b3e]">.</span></h1>
             <p className="mb-8 mt-6 max-w-lg text-base leading-7 text-[#515d70]">{content.intro}</p>
 
             <div className="space-y-4 mb-8">
-              <div className="flex items-center gap-3 border-t border-[#182338]/20 py-3 text-sm text-[#182338]">
-                <div className="text-[#f05b43]">
+              <div className="flex items-center gap-3 border-t border-[#121212]/20 py-3 text-sm text-[#121212]">
+                <div className="text-[#d24b3e]">
                   <Mail className="h-4 w-4" />
                 </div>
                 {content.email}
               </div>
-              <div className="flex items-center gap-3 border-t border-[#182338]/20 py-3 text-sm text-[#182338]">
-                <div className="text-[#f05b43]">
+              <div className="flex items-center gap-3 border-t border-[#121212]/20 py-3 text-sm text-[#121212]">
+                <div className="text-[#d24b3e]">
                   <MapPin className="h-4 w-4" />
                 </div>
                 {content.location}
               </div>
             </div>
 
-            <div className="bg-[#efc65f] p-5">
-              <h3 className="mb-2 font-display text-lg font-bold tracking-[-0.04em] text-[#182338]">
+            <div className="bg-[#fec430] p-5">
+              <h3 className="mb-2 font-display text-lg font-bold tracking-[-0.04em] text-[#121212]">
                 Prefer to schedule?
               </h3>
-              <p className="mb-3 text-sm text-[#182338]/75">
+              <p className="mb-3 text-sm text-[#121212]/75">
                 Book a 30-minute call to discuss your project.
               </p>
               <Link
                 to="/book"
-                className="inline-flex items-center gap-1 text-sm font-semibold text-[#182338] underline decoration-[#f05b43] decoration-2 underline-offset-4"
+                className="inline-flex items-center gap-1 text-sm font-semibold text-[#121212] underline decoration-[#d24b3e] decoration-2 underline-offset-4"
               >
                 Book a time
                 <ArrowRight className="w-3 h-3" />
@@ -119,7 +119,7 @@ export default function Contact() {
                 className="border border-[#4f8a67]/30 bg-[#e3ecde] p-8 text-center"
               >
                 <CheckCircle className="mx-auto mb-4 h-12 w-12 text-[#4f8a67]" />
-                <h2 className="mb-2 font-display text-xl font-bold text-[#182338]">
+                <h2 className="mb-2 font-display text-xl font-bold text-[#121212]">
                   Message sent!
                 </h2>
                 <p className="mb-6 text-[#515d70]">
@@ -128,7 +128,7 @@ export default function Contact() {
                 <Button
                   onClick={() => setSubmitted(false)}
                   variant="outline"
-                  className="rounded-none border-[#182338]/25 text-[#182338]"
+                  className="rounded-none border-[#121212]/25 text-[#121212]"
                 >
                   Send another message
                 </Button>
@@ -142,7 +142,7 @@ export default function Contact() {
                 onSubmit={handleSubmit}
                 className="space-y-6">
                 {submitError && (
-                  <div className="flex items-center gap-2 border border-[#f05b43]/30 bg-[#f8dfd6] p-4 text-sm text-[#9c2e20]">
+                  <div className="flex items-center gap-2 border border-[#d24b3e]/30 bg-[#f8dfd6] p-4 text-sm text-[#9c2e20]">
                     <AlertCircle className="w-4 h-4 shrink-0" />
                     {submitError}
                   </div>
@@ -157,7 +157,7 @@ export default function Contact() {
                       setFormData((prev) => ({ ...prev, name: e.target.value }))
                     }
                     placeholder="Your name"
-                    className={`mt-1 min-h-12 rounded-none border-[#182338]/25 bg-white/55 placeholder:text-[#737988] focus-visible:ring-[#f05b43] ${errors.name ? 'border-[#f05b43]' : ''}`}
+                    className={`mt-1 min-h-12 rounded-none border-[#121212]/25 bg-white/55 placeholder:text-[#737988] focus-visible:ring-[#d24b3e] ${errors.name ? 'border-[#d24b3e]' : ''}`}
                   />
                   {errors.name && (
                     <p className="text-xs text-coral mt-1">{errors.name}</p>
@@ -174,7 +174,7 @@ export default function Contact() {
                       setFormData((prev) => ({ ...prev, email: e.target.value }))
                     }
                     placeholder="you@example.com"
-                    className={`mt-1 min-h-12 rounded-none border-[#182338]/25 bg-white/55 placeholder:text-[#737988] focus-visible:ring-[#f05b43] ${errors.email ? 'border-[#f05b43]' : ''}`}
+                    className={`mt-1 min-h-12 rounded-none border-[#121212]/25 bg-white/55 placeholder:text-[#737988] focus-visible:ring-[#d24b3e] ${errors.email ? 'border-[#d24b3e]' : ''}`}
                   />
                   {errors.email && (
                     <p className="text-xs text-coral mt-1">{errors.email}</p>
@@ -191,7 +191,7 @@ export default function Contact() {
                     }
                     placeholder="Tell me about your project..."
                     rows={6}
-                    className={`mt-1 rounded-none border-[#182338]/25 bg-white/55 placeholder:text-[#737988] focus-visible:ring-[#f05b43] ${errors.message ? 'border-[#f05b43]' : ''}`}
+                    className={`mt-1 rounded-none border-[#121212]/25 bg-white/55 placeholder:text-[#737988] focus-visible:ring-[#d24b3e] ${errors.message ? 'border-[#d24b3e]' : ''}`}
                   />
                   {errors.message && (
                     <p className="text-xs text-coral mt-1">{errors.message}</p>
@@ -201,7 +201,7 @@ export default function Contact() {
                 <Button
                   type="submit"
                   disabled={submitting}
-                  className="h-12 w-full rounded-none bg-[#182338] text-[#f6f1e8] hover:bg-[#f05b43] hover:text-[#182338]"
+                  className="h-12 w-full rounded-none bg-[#121212] text-[#f8f6f1] hover:bg-[#d24b3e] hover:text-[#121212]"
                 >
                   {submitting ? (
                     'Sending...'
