@@ -23,26 +23,26 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       transition={{ duration: 0.45, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
       className="group"
     >
-      <Link to={`/work/${project.slug}`} className="block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#426fbd]">
-        <div className="relative aspect-[1.18] overflow-hidden bg-[#e9c961]">
+      <Link to={`/work/${project.slug}`} className="block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#2f6b44]">
+        <div className="relative aspect-[1.18] overflow-hidden bg-[#e8d7a4]">
           {project.cover_image_url ? (
             <img src={project.cover_image_url} alt="" loading="lazy" className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]" />
           ) : (
-            <div className="flex h-full items-center justify-center bg-[#182338] px-8 text-center text-[#f6f1e8]">
+            <div className="flex h-full items-center justify-center bg-[#121212] px-8 text-center text-[#f8f6f1]">
               <span className="font-display text-4xl font-bold leading-[0.98] tracking-[-0.055em] sm:text-5xl">{project.title}</span>
             </div>
           )}
-          <span className="absolute bottom-4 left-4 inline-flex max-w-[calc(100%-2rem)] bg-[#f6f1e8] px-3 py-1.5 text-[11px] font-semibold text-[#182338]">
+          <span className="absolute bottom-4 left-4 inline-flex max-w-[calc(100%-2rem)] bg-[#f8f6f1] px-3 py-1.5 text-[11px] font-semibold text-[#121212]">
             {project.type?.[0] ?? 'Selected work'}
           </span>
         </div>
       </Link>
       <div className="flex items-start justify-between gap-5 pt-4">
         <div>
-          <h3 className="font-display text-xl font-bold tracking-[-0.04em] text-[#182338] sm:text-2xl">{project.title}</h3>
+          <h3 className="font-display text-xl font-bold tracking-[-0.04em] text-[#121212] sm:text-2xl">{project.title}</h3>
           {project.summary && <p className="mt-2 max-w-xl text-sm leading-6 text-[#555f6f]">{project.summary}</p>}
         </div>
-        <Link to={`/work/${project.slug}`} aria-label={`View ${project.title}`} className="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-[#182338]/25 text-[#182338] transition-colors hover:border-[#f05b43] hover:bg-[#f05b43]">
+        <Link to={`/work/${project.slug}`} aria-label={`View ${project.title}`} className="inline-flex h-10 w-10 shrink-0 items-center justify-center border border-[#121212]/25 text-[#121212] transition-colors hover:border-[#d24b3e] hover:bg-[#d24b3e]">
           <ArrowUpRight className="h-4 w-4" />
         </Link>
       </div>
@@ -84,7 +84,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="overflow-hidden bg-[#f6f1e8] text-[#182338]">
+    <div className="overflow-hidden bg-[#f8f6f1] text-[#121212]">
       <BrushaHero
         brand="Yats"
         logo={{ src: '/yats-logo.svg', alt: 'Yats', width: 150, height: 42 }}
@@ -103,13 +103,13 @@ export default function Home() {
         }}
       />
 
-      <section id="services" className="bg-[#182338] text-[#f6f1e8]">
+      <section id="services" className="bg-[#121212] text-[#f8f6f1]">
         <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 sm:py-24 lg:px-12">
           <div className="grid gap-12 md:grid-cols-[0.8fr_1.2fr] md:gap-20">
             <div>
-              <p className="text-sm leading-6 text-[#f6f1e8]/65">A focused practice for businesses that want the details to add up.</p>
+              <p className="text-sm leading-6 text-[#f8f6f1]/65">A focused practice for businesses that want the details to add up.</p>
               <h2 className="mt-8 max-w-[9ch] font-display text-5xl font-bold leading-[0.95] tracking-[-0.06em] sm:text-6xl">The whole thing should feel like one thing.</h2>
-              <Link to="/pricing" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#efc65f] transition-colors hover:text-[#f05b43]">Explore services<ArrowUpRight className="h-4 w-4" /></Link>
+              <Link to="/pricing" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#fec430] transition-colors hover:text-[#d24b3e]">Explore services<ArrowUpRight className="h-4 w-4" /></Link>
             </div>
 
             <div className="border-t border-white/25">
@@ -124,9 +124,9 @@ export default function Home() {
                 >
                   <div>
                     <h3 className="font-display text-2xl font-bold tracking-[-0.045em] sm:text-3xl">{service.title}</h3>
-                    <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.09em] text-[#efc65f]">{service.note}</p>
+                    <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.09em] text-[#fec430]">{service.note}</p>
                   </div>
-                  <p className="max-w-[38rem] text-sm leading-6 text-[#f6f1e8]/70 sm:pt-1">{service.description}</p>
+                  <p className="max-w-[38rem] text-sm leading-6 text-[#f8f6f1]/70 sm:pt-1">{service.description}</p>
                 </motion.article>
               ))}
             </div>
@@ -135,57 +135,57 @@ export default function Home() {
       </section>
 
       {(loading || projects.length > 0) && (
-        <section className="bg-[#f6f1e8] py-20 sm:py-28">
+        <section className="bg-[#f8f6f1] py-20 sm:py-28">
           <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
-            <div className="mb-10 flex items-end justify-between gap-6 border-b border-[#182338]/20 pb-5 sm:mb-12">
+            <div className="mb-10 flex items-end justify-between gap-6 border-b border-[#121212]/20 pb-5 sm:mb-12">
               <div>
                 <h2 className="font-display text-4xl font-bold tracking-[-0.055em] sm:text-6xl">Selected work</h2>
                 <p className="mt-3 text-sm text-[#5d6673]">The details are the difference.</p>
               </div>
-              <Link to="/work" className="hidden items-center gap-2 pb-1 text-sm font-semibold text-[#182338] sm:inline-flex">All work<ArrowUpRight className="h-4 w-4 text-[#f05b43]" /></Link>
+              <Link to="/work" className="hidden items-center gap-2 pb-1 text-sm font-semibold text-[#121212] sm:inline-flex">All work<ArrowUpRight className="h-4 w-4 text-[#d24b3e]" /></Link>
             </div>
             {loading ? (
               <div className="grid gap-8 md:grid-cols-2">{[0, 1].map((item) => <div key={item}><Skeleton className="aspect-[1.18] rounded-none bg-[#e4dfd3]" /><Skeleton className="mt-5 h-6 w-1/2 rounded-none bg-[#e4dfd3]" /></div>)}</div>
             ) : (
               <div className="grid gap-x-8 gap-y-12 md:grid-cols-2 lg:gap-x-12">{projects.map((project, index) => <ProjectCard key={project.id} project={project} index={index} />)}</div>
             )}
-            <Link to="/work" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold sm:hidden">All work<ArrowUpRight className="h-4 w-4 text-[#f05b43]" /></Link>
+            <Link to="/work" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold sm:hidden">All work<ArrowUpRight className="h-4 w-4 text-[#d24b3e]" /></Link>
           </div>
         </section>
       )}
 
       <GithubProjects />
 
-      <section className="bg-[#e8b94f] text-[#182338]">
+      <section className="bg-[#fec430] text-[#121212]">
         <div className="mx-auto grid max-w-[1440px] gap-10 px-5 py-20 sm:px-8 sm:py-24 lg:grid-cols-[1fr_0.8fr] lg:items-center lg:px-12">
           <div>
             <h2 className="max-w-[11ch] font-display text-5xl font-bold leading-[0.94] tracking-[-0.06em] sm:text-7xl">{about.heading}</h2>
-            <p className="mt-6 max-w-[42rem] text-base leading-7 text-[#182338]/80">{about.body}</p>
-            <div className="mt-7 flex flex-wrap gap-x-4 gap-y-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#182338]/70">
+            <p className="mt-6 max-w-[42rem] text-base leading-7 text-[#121212]/80">{about.body}</p>
+            <div className="mt-7 flex flex-wrap gap-x-4 gap-y-2 text-xs font-semibold uppercase tracking-[0.08em] text-[#121212]/70">
               {about.skills.map((skill) => <span key={skill}>{skill}</span>)}
             </div>
-            <Link to="/about" className="mt-8 inline-flex items-center gap-2 text-sm font-bold underline decoration-[#f05b43] decoration-2 underline-offset-4">More about Yats<ArrowRight className="h-4 w-4" /></Link>
+            <Link to="/about" className="mt-8 inline-flex items-center gap-2 text-sm font-bold underline decoration-[#d24b3e] decoration-2 underline-offset-4">More about Yats<ArrowRight className="h-4 w-4" /></Link>
           </div>
-          <div className="relative flex min-h-[280px] items-end justify-between overflow-hidden bg-[#182338] p-6 text-[#f6f1e8] sm:min-h-[340px] sm:p-8">
-            <div aria-hidden="true" className="absolute -right-14 -top-20 h-64 w-64 rounded-full border border-[#efc65f]/50 sm:h-80 sm:w-80" />
-            <div aria-hidden="true" className="absolute -right-1 -top-8 h-52 w-52 rounded-full border border-[#f05b43]/70 sm:h-64 sm:w-64" />
-            <span className="relative font-display text-[6rem] font-extrabold leading-none tracking-[-0.09em] text-[#f05b43] sm:text-[8rem]">yats<span className="text-[#efc65f]">.</span></span>
-            <span className="relative text-right text-[10px] font-semibold uppercase leading-5 tracking-[0.12em] text-[#f6f1e8]/70">Independent<br />by design</span>
+          <div className="relative flex min-h-[280px] items-end justify-between overflow-hidden bg-[#121212] p-6 text-[#f8f6f1] sm:min-h-[340px] sm:p-8">
+            <div aria-hidden="true" className="absolute -right-14 -top-20 h-64 w-64 rounded-full border border-[#fec430]/50 sm:h-80 sm:w-80" />
+            <div aria-hidden="true" className="absolute -right-1 -top-8 h-52 w-52 rounded-full border border-[#d24b3e]/70 sm:h-64 sm:w-64" />
+            <span className="relative font-display text-[6rem] font-extrabold leading-none tracking-[-0.09em] text-[#d24b3e] sm:text-[8rem]">yats<span className="text-[#fec430]">.</span></span>
+            <span className="relative text-right text-[10px] font-semibold uppercase leading-5 tracking-[0.12em] text-[#f8f6f1]/70">Independent<br />by design</span>
           </div>
         </div>
       </section>
 
-      <section className="bg-[#f6f1e8] px-5 py-20 sm:px-8 sm:py-28 lg:px-12">
-        <div className="mx-auto flex max-w-[1440px] flex-col items-start justify-between gap-8 border-t border-[#182338]/20 pt-8 md:flex-row md:items-end">
+      <section className="bg-[#f8f6f1] px-5 py-20 sm:px-8 sm:py-28 lg:px-12">
+        <div className="mx-auto flex max-w-[1440px] flex-col items-start justify-between gap-8 border-t border-[#121212]/20 pt-8 md:flex-row md:items-end">
           <div>
             <h2 className="max-w-[10ch] font-display text-5xl font-bold leading-[0.95] tracking-[-0.06em] sm:text-7xl">{cta.heading}</h2>
             <p className="mt-5 max-w-xl text-sm leading-6 text-[#5d6673]">{cta.body}</p>
           </div>
           <div className="flex shrink-0 flex-wrap items-center gap-x-6 gap-y-4">
-            <Button asChild size="lg" className="group h-12 rounded-none bg-[#f05b43] px-5 font-semibold text-[#182338] hover:bg-[#182338] hover:text-[#f6f1e8]">
+            <Button asChild size="lg" className="group h-12 rounded-none bg-[#d24b3e] px-5 font-semibold text-[#121212] hover:bg-[#121212] hover:text-[#f8f6f1]">
               <Link to={cta.primary_cta_href}>{cta.primary_cta_label}<ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></Link>
             </Button>
-            <Link to={cta.secondary_cta_href} className="text-sm font-semibold underline decoration-[#426fbd] decoration-2 underline-offset-4">{cta.secondary_cta_label}</Link>
+            <Link to={cta.secondary_cta_href} className="text-sm font-semibold underline decoration-[#2f6b44] decoration-2 underline-offset-4">{cta.secondary_cta_label}</Link>
           </div>
         </div>
       </section>
