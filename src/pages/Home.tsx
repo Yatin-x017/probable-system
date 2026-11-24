@@ -1,14 +1,12 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, ExternalLink } from 'lucide-react'
+import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { motion, type Variants } from 'framer-motion'
-import HeroScene from '@/components/HeroScene'
 import GlassReveal from '@/components/GlassRevealYats'
 import GithubProjects from '@/components/GithubProjects'
 import { ThreeDMarquee } from '@/components/ui/3d-marquee'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { EmptyState } from '@/components/ui/empty-state'
 import { getFeaturedProjects } from '@/lib/supabase/api'
 import { getSiteContent } from '@/lib/supabase/content'
 import { DEFAULT_HERO, DEFAULT_ABOUT_TEASER, DEFAULT_CTA, DEFAULT_MARQUEE } from '@/lib/content/defaults'
@@ -16,14 +14,13 @@ import type { HeroContent, AboutTeaserContent, CtaContent, MarqueeContent } from
 import type { Database } from '@/types/supabase'
 import { springs, useRevealUp } from '@/lib/motion'
 
-// Staggered reveal for hero content — each child settles in with the shared
-// spring language instead of a flat fade, so the first 3 seconds feel alive.
 const heroContainer: Variants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.09, delayChildren: 0.1 } },
+  show: { transition: { staggerChildren: 0.09, delayChildren: 0.08 } },
 }
+
 const heroItem: Variants = {
-  hidden: { opacity: 0, y: 22 },
+  hidden: { opacity: 0, y: 18 },
   show: { opacity: 1, y: 0, transition: springs.smooth },
 }
 
@@ -31,40 +28,73 @@ type Project = Database['public']['Tables']['projects']['Row']
 
 function ProjectCard({ project }: { project: Project }) {
   return (
-    <Link
-      to={`/work/${project.slug}`}
-      className="group block bg-white rounded-xl border border-gray-100 overflow-hidden shadow-layer-sm hover:shadow-layer-lg transition-shadow duration-300"
-    >
-      <div className="aspect-[16/10] bg-gray-50 relative overflow-hidden">
-        {project.cover_image_url ? (
-          <img
-            src={project.cover_image_url}
-            alt={project.title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-        ) : (
-          <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-50" />
-        )}
-      </div>
-      <div className="p-5">
-        <div className="flex items-center gap-2 mb-2">
-          {project.type?.map((t) => (
-            <span
-              key={t}
-              className="text-[10px] uppercase tracking-wider font-semibold px-2 py-0.5 rounded-full bg-gray-100 text-gray-500"
-            >
-              {t}
-            </span>
-          ))}
+    <article className="group">
+      <Link
+        to={`/work/${project.slug}`}
+        className="block overflow-hidden rounded-[1.35rem] bg-[#e8e9e2] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#547d73]"
+        aria-label={`View ${project.title}`}
+      >
+        <div className="relative aspect-[1.25] overflow-hidden">
+          {project.cover_image_url ? (
+            <img
+              src={project.cover_image_url}
+              alt=""
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(ellipse_at_50%_45%,#dce9e2_0%,#e8e9e2_60%,#ede9e2_100%)]">
+              <div className="flex h-24 w-24 items-center justify-center rounded-full border border-white/70 bg-white/35 text-4xl font-medium tracking-[-0.08em] text-[#547d73] shadow-[0_12px_40px_rgba(40,63,54,0.08)]">
+                {project.title.slice(0, 1)}
+              </div>
+            </div>
+          )}
+          <span className="absolute bottom-4 left-4 rounded-full border border-white/50 bg-white/75 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#36443d] backdrop-blur-sm">
+            {project.type?.[0] ?? 'Selected work'}
+          </span>
         </div>
-        <h3 className="text-lg font-semibold text-gray-900 group-hover:text-sky transition-colors">
-          {project.title}
-        </h3>
-        <p className="mt-1 text-sm text-gray-500 line-clamp-2">{project.summary}</p>
+      </Link>
+
+      <div className="flex items-start justify-between gap-5 px-1 pt-5">
+        <div>
+          <h3 className="text-xl font-semibold tracking-[-0.03em] text-[#1c2522] sm:text-2xl">
+            {project.title}
+          </h3>
+          {project.summary && (
+            <p className="mt-2 max-w-xl text-sm leading-6 text-[#69726d]">
+              {project.summary}
+            </p>
+          )}
+        </div>
+        <Link
+          to={`/work/${project.slug}`}
+          aria-label={`Read the ${project.title} case study`}
+          className="mt-1 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#d9ded8] text-[#36443d] transition-colors hover:border-[#547d73] hover:bg-[#547d73] hover:text-white"
+        >
+          <ArrowUpRight className="h-4 w-4" />
+        </Link>
       </div>
-    </Link>
+    </article>
   )
 }
+
+const services = [
+  {
+    number: '01',
+    title: 'Brand identity',
+    description: 'Visual direction and practical identity systems that give every touchpoint a common thread.',
+  },
+  {
+    number: '02',
+    title: 'Web design',
+    description: 'Responsive websites with a clear story, thoughtful details, and an easy next step.',
+  },
+  {
+    number: '03',
+    title: 'Social presence',
+    description: 'Content planning and day-to-day creative support to keep your channels recognizably yours.',
+  },
+]
 
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>([])
@@ -73,6 +103,7 @@ export default function Home() {
   const [aboutTeaser, setAboutTeaser] = useState<AboutTeaserContent>(DEFAULT_ABOUT_TEASER)
   const [cta, setCta] = useState<CtaContent>(DEFAULT_CTA)
   const [marquee, setMarquee] = useState<MarqueeContent>(DEFAULT_MARQUEE)
+  const revealUp = useRevealUp()
 
   useEffect(() => {
     getFeaturedProjects()
@@ -86,268 +117,230 @@ export default function Home() {
     getSiteContent('home_marquee').then(setMarquee).catch(console.error)
   }, [])
 
-  const revealUp = useRevealUp()
-
   return (
-    <div>
-      {/* Hero Section */}
-      <section
-        className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      >
-        <HeroScene />
+    <div className="bg-[#f7f5ef] text-[#1c2522]">
+      <section className="relative isolate flex min-h-[88svh] items-center overflow-hidden bg-[#f1efe8]">
+        <div aria-hidden="true" className="pointer-events-none absolute right-[10%] top-1/2 z-0 hidden h-[34rem] w-[34rem] -translate-y-1/2 rounded-full bg-[#dce8df]/80 blur-3xl md:block" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-28 bg-gradient-to-t from-[#f1efe8] to-transparent" />
 
-        {/* Very subtle noise texture — breaks up flat gradients, reads as premium not flashy */}
-        <div
-          className="pointer-events-none absolute inset-0 z-[6] opacity-[0.03] mix-blend-overlay"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-          }}
-        />
+        <div className="relative z-10 mx-auto grid w-full max-w-[1440px] grid-cols-1 items-center gap-8 px-5 pb-16 pt-32 sm:px-8 md:grid-cols-[1.08fr_0.92fr] md:gap-4 md:px-12 lg:px-20">
+          <motion.div
+            variants={heroContainer}
+            initial="hidden"
+            animate="show"
+            className="max-w-[720px]"
+          >
+            <motion.p
+              variants={heroItem}
+              className="flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-[#547d73] sm:text-xs"
+            >
+              <span className="h-px w-8 bg-[#7ba99a]" />
+              Yats · independent creative practice
+            </motion.p>
 
-        <motion.div
-          variants={heroContainer}
-          initial="hidden"
-          animate="show"
-          className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
-        >
-          <motion.div variants={heroItem} className="mb-7 flex justify-center">
+            <motion.h1
+              variants={heroItem}
+              className="mt-7 max-w-[13ch] text-[clamp(3.5rem,7.1vw,7.25rem)] font-semibold leading-[0.94] tracking-[-0.075em] text-[#1c2522]"
+            >
+              <span className="block">{hero.heading_top}</span>
+              <span className="block text-[#5d8b7d]">{hero.heading_highlight}</span>
+              <span className="block">{hero.heading_bottom}</span>
+            </motion.h1>
+
+            <motion.p
+              variants={heroItem}
+              className="mt-7 max-w-[34rem] text-base leading-7 text-[#626b66] sm:text-lg sm:leading-8"
+            >
+              {hero.subheading}
+            </motion.p>
+
+            <motion.div variants={heroItem} className="mt-9 flex flex-wrap items-center gap-5">
+              <Button asChild size="lg" className="h-12 rounded-full bg-[#1c2522] px-6 text-white hover:bg-[#34463e]">
+                <Link to={hero.primary_cta_href}>
+                  {hero.primary_cta_label}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Link
+                to={hero.secondary_cta_href}
+                className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-[#36443d] transition-colors hover:text-[#5d8b7d]"
+              >
+                {hero.secondary_cta_label}
+                <span aria-hidden="true">↗</span>
+              </Link>
+            </motion.div>
+
+            <motion.div variants={heroItem} className="mt-12 flex flex-wrap gap-x-5 gap-y-2 text-[11px] font-medium text-[#737b75]">
+              <span>Brand identity</span><span aria-hidden="true">·</span>
+              <span>Web design</span><span aria-hidden="true">·</span>
+              <span>Social media</span>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ ...springs.smooth, delay: 0.2 }}
+            className="relative hidden min-h-[470px] items-center justify-center md:flex"
+          >
+            <div aria-hidden="true" className="absolute h-[410px] w-[410px] rounded-full border border-white/70 bg-white/15 shadow-[0_30px_100px_rgba(54,75,66,0.08)]" />
+            <div aria-hidden="true" className="absolute h-[325px] w-[325px] rounded-full border border-[#b6c9be]/60" />
             <GlassReveal
               label="Yats liquid glass mark"
               look="dark"
-              background="#101318"
-              logoColor="#8de2d9"
-              tileSize={128}
-              logoScale={0.62}
-              finalScale={0.74}
+              background="#17201d"
+              logoColor="#a6e4d8"
+              tileSize={192}
+              logoScale={0.5}
+              finalScale={0.78}
               loop={false}
-              className="h-24 w-24 rounded-3xl border border-white/10 shadow-2xl"
+              className="relative z-10 h-[250px] w-[250px] rounded-full border border-white/25 shadow-[0_28px_70px_rgba(25,43,36,0.24)]"
             />
+            <span className="absolute left-3 top-[17%] rounded-full border border-white/80 bg-[#f8f6f1]/80 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#52685f] backdrop-blur-sm">
+              Identity · web · social
+            </span>
+            <span className="absolute bottom-[15%] right-0 rounded-full border border-white/80 bg-[#f8f6f1]/85 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#52685f] backdrop-blur-sm">
+              Made by Yatin
+            </span>
           </motion.div>
-          <motion.h1
-            variants={heroItem}
-            className="text-display-lg"
-          >
-            <span className="frosted-text">{hero.heading_top}</span>
-            <br />
-            <span className="frosted-text frosted-text--muted">{hero.heading_highlight}</span>
-            <br />
-            <span className="frosted-text">{hero.heading_bottom}</span>
-          </motion.h1>
-          <motion.p
-            variants={heroItem}
-            className="mt-6 text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed"
-          >
-            {hero.subheading}
-          </motion.p>
-          <motion.div
-            variants={heroItem}
-            className="mt-10 flex justify-center"
-          >
-            <Button asChild size="lg" className="rounded-lg">
-              <Link to="/pricing">
-                Know what suits you
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </Button>
-          </motion.div>
-        </motion.div>
-      </section>
-
-      {/* Featured Work Section */}
-      <section className="relative py-24 bg-[#F8F9FA] overflow-hidden">
-        {/* Soft ambient light blobs — same technique as the reference (isolated,
-            rotated radial gradients) but in neutral/white tones for the light theme. */}
-        <div
-          aria-hidden
-          className="absolute inset-0 z-0 pointer-events-none isolate opacity-70 contain-strict hidden lg:block"
-        >
-          <div className="w-[35rem] h-[80rem] -translate-y-[22rem] absolute right-0 top-0 rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,0%,.035)_0,hsla(0,0%,0%,.01)_50%,transparent_80%)]" />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            {...revealUp}
-            className="flex items-end justify-between mb-12"
-          >
+        <span className="absolute bottom-8 left-5 z-10 text-[10px] font-semibold uppercase tracking-[0.2em] text-[#7a817a] sm:left-8 md:left-12 lg:left-20">
+          Scroll to explore
+        </span>
+        <span aria-hidden="true" className="absolute bottom-8 right-5 z-10 h-8 w-px bg-[#a8b5ab] sm:right-8 md:right-12 lg:right-20" />
+      </section>
+
+      <section id="services" className="border-b border-[#e4e1d9] bg-[#f7f5ef] py-20 sm:py-24">
+        <div className="mx-auto max-w-[1320px] px-5 sm:px-8 lg:px-12">
+          <div className="mb-12 flex flex-col gap-4 md:mb-14 md:flex-row md:items-end md:justify-between">
             <div>
-              <h2 className="text-display-sm text-gray-900">Featured Work</h2>
-              <p className="mt-2 text-gray-500">
-                A selection of recent projects
-              </p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#648c7e]">What I can help with</p>
+              <h2 className="mt-3 max-w-[13ch] text-3xl font-semibold leading-tight tracking-[-0.045em] text-[#1c2522] sm:text-4xl">
+                One clear brand, across every touchpoint.
+              </h2>
             </div>
-            <Link
-              to="/work"
-              className="hidden sm:inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              View all projects
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </motion.div>
+            <p className="max-w-md text-sm leading-6 text-[#69726d]">
+              A focused set of creative services for small teams and independent businesses.
+            </p>
+          </div>
 
-          {loading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(3)].map((_, i) => (
-                <div key={i} className="bg-white rounded-xl border border-gray-100 overflow-hidden">
-                  <Skeleton className="aspect-[16/10] w-full rounded-none bg-gray-100" />
-                  <div className="p-5 space-y-3">
-                    <Skeleton className="h-4 w-1/3 bg-gray-100" />
-                    <Skeleton className="h-5 w-3/4 bg-gray-100" />
-                    <Skeleton className="h-4 w-full bg-gray-100" />
-                  </div>
-                </div>
-              ))}
+          <div className="grid grid-cols-1 border-t border-[#dcded6] md:grid-cols-3">
+            {services.map((service) => (
+              <div key={service.number} className="border-b border-[#dcded6] py-7 md:border-b-0 md:px-7 md:py-8 md:first:pl-0 md:last:pr-0 md:border-l md:first:border-l-0 md:border-[#dcded6]">
+                <span className="text-[11px] font-medium tracking-[0.14em] text-[#8a958d]">{service.number}</span>
+                <h3 className="mt-7 text-xl font-semibold tracking-[-0.03em] text-[#26322d]">{service.title}</h3>
+                <p className="mt-2 max-w-sm text-sm leading-6 text-[#69726d]">{service.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {(loading || projects.length > 0) && (
+        <section className="bg-[#eeece5] py-20 sm:py-28">
+          <div className="mx-auto max-w-[1320px] px-5 sm:px-8 lg:px-12">
+            <div className="mb-10 flex items-end justify-between gap-5 sm:mb-14">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#648c7e]">Selected work</p>
+                <h2 className="mt-3 text-4xl font-semibold tracking-[-0.055em] text-[#1c2522] sm:text-5xl">Made with intention.</h2>
+              </div>
+              <Link to="/work" className="hidden items-center gap-2 pb-1 text-sm font-medium text-[#46584f] transition-colors hover:text-[#648c7e] sm:inline-flex">
+                All work <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
-          ) : projects.length > 0 ? (
-            <>
-              {/* Spotlight preview of the lead project — perspective-tilted
-                  screenshot, mask-fades out at the edges. Purely decorative,
-                  the actual click target is the project's own card below. */}
-              {projects[0].cover_image_url && (
-                <motion.div
-                  {...revealUp}
-                  className="mb-16 mx-auto max-w-6xl [mask-image:linear-gradient(to_bottom,black_55%,transparent_100%)]"
-                >
-                  <Link
-                    to={`/work/${projects[0].slug}`}
-                    aria-label={`Open ${projects[0].title}`}
-                    className="block [perspective:1200px] [mask-image:linear-gradient(to_right,black_60%,transparent_100%)] -mr-16 pl-16 lg:-mr-40 lg:pl-40"
-                  >
-                    <div style={{ transform: 'rotateX(18deg)' }}>
-                      <div className="relative skew-x-[.28rad] lg:h-[26rem] rounded-xl overflow-hidden border border-gray-200 shadow-layer-xl">
-                        <img
-                          src={projects[0].cover_image_url}
-                          alt={projects[0].title}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
+
+            {loading ? (
+              <div className="grid grid-cols-1 gap-9 md:grid-cols-2">
+                {[0, 1].map((item) => (
+                  <div key={item} className="overflow-hidden rounded-[1.35rem]">
+                    <Skeleton className="aspect-[1.25] w-full rounded-none bg-[#e1dfd7]" />
+                    <div className="space-y-3 px-1 pt-5">
+                      <Skeleton className="h-5 w-1/2 bg-[#e1dfd7]" />
+                      <Skeleton className="h-4 w-4/5 bg-[#e1dfd7]" />
                     </div>
-                  </Link>
-                </motion.div>
-              )}
-
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {projects.map((project, i) => (
-                  <motion.div
-                    key={project.id}
-                    initial={{ opacity: 0, y: 18 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-60px' }}
-                    transition={{ ...springs.smooth, delay: i * 0.06 }}
-                  >
-                    <ProjectCard project={project} />
-                  </motion.div>
+                  </div>
                 ))}
               </div>
-            </>
-          ) : (
-            <EmptyState
-              size="compact"
-              message="No featured projects yet"
-              action={
-                <Link
-                  to="/admin/projects"
-                  className="inline-flex items-center gap-1 text-sm text-sky hover:underline"
-                >
-                  Add projects in the admin
-                  <ExternalLink className="w-3 h-3" />
-                </Link>
-              }
-            />
-          )}
-        </div>
-      </section>
+            ) : (
+              <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-2 lg:gap-x-10">
+                {projects.map((project) => <ProjectCard key={project.id} project={project} />)}
+              </div>
+            )}
+
+            <Link to="/work" className="mt-10 inline-flex items-center gap-2 text-sm font-medium text-[#46584f] sm:hidden">
+              All work <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </section>
+      )}
 
       <GithubProjects />
 
-      {/* About Teaser */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <motion.div {...revealUp}>
-              <h2 className="text-display-sm text-gray-900">
-                {aboutTeaser.heading}
-              </h2>
-              <p className="mt-4 text-gray-500 leading-relaxed">
-                {aboutTeaser.body}
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                {aboutTeaser.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-3 py-1.5 bg-gray-50 text-gray-600 text-sm rounded-full border border-gray-100"
-                  >
-                    {skill}
-                  </span>
-                ))}
+      <section className="bg-[#e6ebe5] py-20 sm:py-28">
+        <div className="mx-auto grid max-w-[1320px] grid-cols-1 items-center gap-10 px-5 sm:px-8 lg:grid-cols-[1fr_0.9fr] lg:gap-20 lg:px-12">
+          <motion.div {...revealUp}>
+            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#648c7e]">A little about the practice</p>
+            <h2 className="mt-4 max-w-[13ch] text-4xl font-semibold leading-[1.04] tracking-[-0.06em] text-[#1c2522] sm:text-5xl">
+              {aboutTeaser.heading}
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-7 text-[#596761]">{aboutTeaser.body}</p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {aboutTeaser.skills.map((skill) => (
+                <span key={skill} className="rounded-full border border-[#cfd9d1] bg-white/50 px-3 py-1.5 text-xs font-medium text-[#52685f]">
+                  {skill}
+                </span>
+              ))}
+            </div>
+            <Link to="/about" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-[#263c34] hover:text-[#648c7e]">
+              More about Yats <ArrowRight className="h-4 w-4" />
+            </Link>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 18, scale: 0.985 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={springs.smooth}
+            className="relative overflow-hidden rounded-[1.5rem] bg-[#1c2522]"
+          >
+            {aboutTeaser.image_url ? (
+              <img src={aboutTeaser.image_url} alt={aboutTeaser.heading} loading="lazy" className="aspect-[4/3] w-full object-cover" />
+            ) : (
+              <div className="relative flex aspect-[4/3] w-full flex-col items-center justify-center gap-5 bg-[radial-gradient(ellipse_at_50%_43%,rgba(117,159,143,0.22),transparent_58%)]">
+                <img src="/yats-mark.svg" alt="" className="h-28 w-28 sm:h-36 sm:w-36" />
+                <span className="text-[10px] font-medium uppercase tracking-[0.25em] text-white/55">Yats · design / web / social</span>
               </div>
-              <Link
-                to="/about"
-                className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-gray-900 hover:text-sky transition-colors"
-              >
-                More about me
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 18, scale: 0.98 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={springs.smooth}
-              className="relative"
-            >
-              {aboutTeaser.image_url ? (
-                <img
-                  src={aboutTeaser.image_url}
-                  alt={aboutTeaser.heading}
-                  className="aspect-[4/3] w-full object-cover rounded-lg shadow-layer-md"
-                />
-              ) : (
-                <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-lg bg-[#11161A]">
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_45%,rgba(99,212,198,0.18),transparent_55%)]"
-                  />
-                  <img src="/yats-mark.svg" alt="" className="relative z-10 h-32 w-32 sm:h-40 sm:w-40" />
-                  <span className="absolute bottom-6 left-6 text-[10px] font-medium uppercase tracking-[0.22em] text-white/55">
-                    Yats · design / web / social
-                  </span>
-                </div>
-              )}
-            </motion.div>
-          </div>
+            )}
+          </motion.div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 bg-gray-900">
-        <motion.div
-          {...revealUp}
-          className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center"
-        >
-          <h2 className="text-display-sm text-white">
+      <section className="relative overflow-hidden bg-[#1c2522] py-20 text-white sm:py-28">
+        <div aria-hidden="true" className="pointer-events-none absolute -right-36 -top-52 h-[28rem] w-[28rem] rounded-full border border-white/10 sm:h-[38rem] sm:w-[38rem]" />
+        <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-28 h-[24rem] w-[24rem] rounded-full border border-white/10 sm:h-[32rem] sm:w-[32rem]" />
+        <motion.div {...revealUp} className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-[#a6d4c4]">Have a good one in mind?</p>
+          <h2 className="mt-5 text-4xl font-semibold leading-[1.02] tracking-[-0.06em] text-white sm:text-6xl">
             {cta.heading}
           </h2>
-          <p className="mt-4 text-gray-400">
-            {cta.body}
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Button asChild size="lg" className="rounded-lg bg-white text-gray-900 hover:bg-gray-100">
-              <Link to={cta.primary_cta_href}>{cta.primary_cta_label}</Link>
+          <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-white/65">{cta.body}</p>
+          <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+            <Button asChild size="lg" className="h-12 rounded-full bg-[#f5f2e9] px-6 text-[#1c2522] hover:bg-white">
+              <Link to={cta.primary_cta_href}>{cta.primary_cta_label}<ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
-            <Button asChild size="lg" variant="secondary" className="rounded-lg bg-gray-800 text-white hover:bg-gray-700">
-              <Link to={cta.secondary_cta_href}>{cta.secondary_cta_label}</Link>
-            </Button>
+            <Link to={cta.secondary_cta_href} className="text-sm font-medium text-white/75 transition-colors hover:text-white">
+              {cta.secondary_cta_label}
+            </Link>
           </div>
         </motion.div>
       </section>
 
-      {/* Work Marquee */}
       {marquee.images.length > 0 && (
-        <section className="py-24 bg-white overflow-hidden">
-          <motion.div {...revealUp} className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-4">
-            <h2 className="text-display-sm text-gray-900">{marquee.heading}</h2>
-            <p className="mt-2 text-gray-500">{marquee.body}</p>
+        <section className="overflow-hidden bg-[#f7f5ef] py-20">
+          <motion.div {...revealUp} className="mx-auto mb-8 max-w-3xl px-5 text-center sm:px-8">
+            <h2 className="text-3xl font-semibold tracking-[-0.05em] text-[#1c2522] sm:text-4xl">{marquee.heading}</h2>
+            <p className="mt-3 text-sm leading-6 text-[#69726d]">{marquee.body}</p>
           </motion.div>
           <ThreeDMarquee images={marquee.images} className="max-w-none rounded-none" />
         </section>
