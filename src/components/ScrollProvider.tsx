@@ -24,13 +24,15 @@ export default function ScrollProvider({ children }: { children: React.ReactNode
     lenisRef.current = instance
     setLenis(instance)
 
+    let frameId = 0
     function raf(time: number) {
       instance.raf(time)
-      requestAnimationFrame(raf)
+      frameId = requestAnimationFrame(raf)
     }
-    requestAnimationFrame(raf)
+    frameId = requestAnimationFrame(raf)
 
     return () => {
+      cancelAnimationFrame(frameId)
       instance.destroy()
     }
   }, [])
